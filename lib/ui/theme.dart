@@ -22,7 +22,7 @@ static final dark= ThemeData(
   );
 }
 TextStyle get subHeadingStyle{
-  return GoogleFonts.lato(
+  return GoogleFonts.ubuntu(
     textStyle: TextStyle(
       fontSize: 24,
       fontWeight: FontWeight.bold,
@@ -31,16 +31,26 @@ TextStyle get subHeadingStyle{
   );
 }
 TextStyle get headingStyle{
-  return GoogleFonts.lato(
+  return GoogleFonts.ubuntu(
     textStyle: TextStyle(
       fontSize: 25,
       fontWeight: FontWeight.bold
     )
   );
 }
+TextStyle get appbr {
+  return GoogleFonts.ubuntu(
+    textStyle: const TextStyle(
+    fontSize: 15,
+    fontWeight:  FontWeight.w600,
+    color: Colors.black
+    )
+  );
+}
+            
  
 TextStyle get titleStyle{
-  return GoogleFonts.lato(
+  return GoogleFonts.ubuntu(
     textStyle: TextStyle(
       fontSize: 16,
       fontWeight: FontWeight.w400,
@@ -50,12 +60,11 @@ TextStyle get titleStyle{
   );
 }
 TextStyle get subStyle{
-  return GoogleFonts.lato(
-    textStyle: TextStyle(
-      fontSize: 13,
-      fontWeight: FontWeight.w400,
-      color: Get.isDarkMode?Colors.grey[100]: Colors.grey[600]
-      
+ return GoogleFonts.ubuntu(
+    textStyle: const TextStyle(
+    fontSize: 15,
+    fontWeight:  FontWeight.w600,
+    color: Colors.black
     )
   );
 }
@@ -66,6 +75,15 @@ TextStyle get subTitleStyle{
       fontWeight: FontWeight.w400,
       color: Get.isDarkMode?Colors.grey[100]: Colors.grey[600]
       
+    )
+  );
+}
+TextStyle get subtitle{
+ return GoogleFonts.ubuntu(
+    textStyle: const TextStyle(
+    fontSize: 14,
+    fontWeight:  FontWeight.w600,
+    color: Colors.white
     )
   );
 }

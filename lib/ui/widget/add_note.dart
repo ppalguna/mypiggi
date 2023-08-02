@@ -1,40 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:my_piggy_app/controllers/task_controller.dart';
-import 'package:my_piggy_app/models/task.dart';
+import 'package:my_piggy_app/controllers/note_controller.dart';
+//import 'package:my_piggy_app/controllers/task_controller.dart';
+import 'package:my_piggy_app/models/note.dart';
+//import 'package:my_piggy_app/models/task.dart';
 import 'package:my_piggy_app/ui/theme.dart';
 import 'package:my_piggy_app/ui/widget/button.dart';
 import 'package:my_piggy_app/ui/widget/input_field.dart';
 
-class AddTaskPage extends StatefulWidget {
-   AddTaskPage({super.key});
+class AddNote extends StatefulWidget {
+   AddNote({super.key});
 
   @override
-  State<AddTaskPage> createState() => _AddTaskPageState();
+  State<AddNote> createState() => _AddNoteState();
   
 }
 
-class _AddTaskPageState extends State<AddTaskPage> {
+class _AddNoteState extends State<AddNote> {
  //deklarasi variabel
   //datetime di panggil dengan _selectDate
-  final TaskController _taskController = Get.put(TaskController());
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _noteController  = TextEditingController();
+  final NoteController _noteController = Get.put(NoteController());
+  final TextEditingController _judulController = TextEditingController();
+  final TextEditingController _keteranganController  = TextEditingController();
   DateTime _selectedDate= DateTime.now();// hari sekarang
   String _endTime="09.30 PM";
   String _startTime = DateFormat("hh:mm a").format(DateTime.now()).toString();
-  int _selectedRemind =5;
-  List<int> remindList=[
-    5,
-    10,
-    15,
-    20,
-
-  ];
-  String _selectedRepeat ="Kosong";
+  String _selectedRepeat ="Hari Ini";
   List<String> RepeatList=[
-    "Kosong",
+    "Hari ini",
     "Harian",
     "Mingguan",
   ];
@@ -45,7 +39,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
       appBar: AppBar(
         
         title: 
-        Text('Penjadwalan', style: subStyle,),
+        Text('Catatan', style: subStyle,),
         bottomOpacity: 0.0,
         elevation: 0.0,
         backgroundColor: Colors.white,
@@ -66,8 +60,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
           
-               MyInputField(title:"Judul", hint: "Masukan judul anda", controller: _titleController,),
-               MyInputField(title:"Catatan", hint: "Masukan catatan anda", controller: _noteController ,),
+               MyInputField(title:"Nama Catatan", hint: "Masukan nama catatan anda", controller: _judulController,),
+               MyInputField(title:"Catatan", hint: "Masukan catatan anda", controller: _keteranganController ,),
                MyInputField(title: "Tanggal", hint: DateFormat.yMd().format(_selectedDate),
                widget: IconButton(
                 icon: Icon(Icons.calendar_today_outlined,
@@ -114,29 +108,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                     )
                 ],
                ),
-               MyInputField(title: "Remind", hint: "$_selectedRemind minutes early",
-              widget: DropdownButton(
-                icon: Icon(Icons.keyboard_arrow_down,
-                color: Colors.grey,
-                ),
-                iconSize:  32,
-                elevation: 4,
-                style: subTitleStyle,
-                underline: Container(height: 0,),
-                onChanged : (String? newValue){
-                  setState(() {
-                    _selectedRemind = int.parse(newValue!);
-                  });
-                },
-                items: remindList.map<DropdownMenuItem<String>>((int value){
-                  return DropdownMenuItem<String>(
-                    value: value.toString(),
-                    child: Text(value.toString()),
-                    );
-                }
-                ).toList(),
-              ),
-             ),
+              
                MyInputField(title: "Pengulangan", hint: "$_selectedRepeat ",
               widget: DropdownButton(
                 icon: Icon(Icons.keyboard_arrow_down,
@@ -281,9 +253,9 @@ _colorPallete(){
 }
 
 _validateDate(){
-  if(_titleController.text.isNotEmpty&&_noteController.text.isNotEmpty){
+  if(_judulController.text.isNotEmpty&&_keteranganController.text.isNotEmpty){
     //add to database
-    _addTaskToDb();
+    _addNoteToDb();
     Get.back();
     Get.snackbar("Sukses", "Input Jadwal Berhasil",
     snackPosition:  SnackPosition.BOTTOM,
@@ -292,7 +264,7 @@ _validateDate(){
     colorText: Colors.white,
     );  
     
-  }else if(_titleController.text.isEmpty||_noteController.text.isEmpty){
+  }else if(_judulController.text.isEmpty||_keteranganController.text.isEmpty){
     Get.snackbar("Required", "Lengkapi semua",
     snackPosition:  SnackPosition.BOTTOM,
     backgroundColor: Colors.red,
@@ -301,15 +273,14 @@ _validateDate(){
     );  
   }
 }
-_addTaskToDb() async {
- int value = await _taskController.addTask(
-  task : Task(
-    note: _noteController.text,
-    title: _titleController.text,
+_addNoteToDb() async {
+ int value = await _noteController.addNote(
+  note : Note(
+    judul: _judulController.text,
+    keterangan: _keteranganController.text,
     date: DateFormat.yMd().format(_selectedDate),
     startTime: _startTime,
     endTime: _endTime,
-    remind: _selectedRemind,
     repeat: _selectedRepeat,
     color: _selectedColor,
     isCompleted: 0, 

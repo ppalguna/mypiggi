@@ -15,7 +15,7 @@ class MyBotton extends StatelessWidget {
       
       child: Container(
         margin: const EdgeInsets.only(top:10, right:20, bottom: 30),
-        padding : const EdgeInsets.only(top: 20, left: 32),//padding tulisan pada button add
+        padding : const EdgeInsets.only(top: 20, left: 35),//padding tulisan pada button add
         width: 130,
         height: 60,
         

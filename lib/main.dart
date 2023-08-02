@@ -3,10 +3,11 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:my_piggy_app/db/db_helper.dart';
 import 'package:my_piggy_app/services/theme_services.dart';
-//import 'package:my_piggy_app/ui/home_page.dart';
-//import 'package:my_piggy_app/ui/home_page.dart';
 import 'package:my_piggy_app/ui/theme.dart';
 import 'package:my_piggy_app/ui/widget/splashscreen.dart';
+//import 'package:my_piggy_app/ui/widget/about.dart';
+//import 'package:my_piggy_app/ui/widget/splashscreen.dart';
+//import 'package:my_piggy_app/ui/widget/splashscreen.dart';
 
 
 Future<void> main() async {
@@ -29,7 +30,8 @@ class MyApp extends StatelessWidget {
       darkTheme: Themes.dark,
       themeMode: ThemeService().theme,      
       // ignore: prefer_const_constructors
-      home: SplashScreen() 
+      home: SplashScreen(),
+      // home: NotifiedPage(label: '',),
     
     );
   }

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_piggy_app/ui/widget/notified_page.dart';
 
 import '../../models/task.dart';
 import '../theme.dart';
@@ -29,6 +31,25 @@ class TaskTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Container(
+                  width: MediaQuery.of(context).size.width/2.5,
+                  //height: MediaQuery.of(context).size.height/33,
+                  decoration:BoxDecoration(
+                     color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(5))
+                  ),
+                  child:  Text(
+                  "PENJADWALAN",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.lato(
+                    textStyle: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey[600]),
+                  ),
+                ),
+                ),
+               
                 Text(
                   task?.title??"",
                   style: GoogleFonts.lato(
@@ -70,12 +91,11 @@ class TaskTile extends StatelessWidget {
             ),
           ),        
            Container(
-            child:
-                     
+            child:    
             IconButton(
-             onPressed: (){
-                     
-             },
+             onPressed:  ()async {
+                        await Get.to(()=>NotifiedPage(label: ''));
+                      },
              icon: const Icon(
              Icons.edit_notifications_outlined,
              color: Colors.white,

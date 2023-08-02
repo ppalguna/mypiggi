@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_piggy_app/ui/theme.dart';
 
 class NotifiedPage extends StatelessWidget {
   final String? label;
@@ -10,7 +11,7 @@ class NotifiedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Get.isDarkMode?Colors.grey[600]:Colors.white,
+        backgroundColor: primaryClr,
         leading: IconButton(
           onPressed: ()=>Get.back(),
           icon: Icon(Icons.arrow_back_ios),
@@ -26,7 +27,7 @@ class NotifiedPage extends StatelessWidget {
           width: 300,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            color: Get.isDarkMode?Colors.white:Colors.grey[400]
+            color: primaryClr
             
           ),
           child: 

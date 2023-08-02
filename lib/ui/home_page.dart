@@ -1,5 +1,6 @@
 
 import 'dart:core';
+import 'dart:io';
 
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +15,12 @@ import 'package:my_piggy_app/services/Notification_services.dart';
 import 'package:my_piggy_app/services/theme_services.dart';
 import 'package:my_piggy_app/ui/add_task_bar.dart';
 import 'package:my_piggy_app/ui/theme.dart';
+import 'package:my_piggy_app/ui/widget/about.dart';
+import 'package:my_piggy_app/ui/widget/add_note.dart';
 import 'package:my_piggy_app/ui/widget/button.dart';
 import 'package:my_piggy_app/ui/widget/header_drawer.dart';
+import 'package:my_piggy_app/ui/widget/pigHealth.dart';
+import 'package:my_piggy_app/ui/widget/pig_data.dart';
 import 'package:my_piggy_app/ui/widget/task_tile.dart';
 
 class HomePage extends StatefulWidget {
@@ -29,6 +34,7 @@ class _HomePageState extends State<HomePage> {
   // ignore: unused_field
   DateTime _selectedDate = DateTime.now();
   final _taskController =Get.put(TaskController());
+  
   var notifyHelper;
   @override
   void initState() {
@@ -50,24 +56,25 @@ class _HomePageState extends State<HomePage> {
              children: [
               MyHeaderDrawer(),
               ListTile(
-                leading: const Icon(Icons.home),
-                title: const Text("Beranda"),
-                onTap: ()=>  Get.back(),
-              ),
-              ListTile(
                 leading: const Icon(Icons.health_and_safety),
                 title: const Text("Kesehatan Babi"),
-                onTap: ()=> print("tapped"),
+                onTap: () async {
+                 await  Get.to(()=>pigHealth());
+               },
               ),
               ListTile(
                 leading: const Icon(Icons.people),
                 title: const Text("Tentang"),
-                onTap: () => print("tapped"),
+                onTap: () async {
+                 await  Get.to(()=>About());
+               },
               ),
               ListTile(
                 leading: const Icon(Icons.logout),
                 title: const Text("Keluar"),
-                onTap: ()=> print("tapped")
+               onTap: () {
+                exit(0);
+               },
               )
              ],
           ),
@@ -86,14 +93,93 @@ class _HomePageState extends State<HomePage> {
       
       floatingActionButton: FloatingActionButton(
         
-        onPressed: (){
-        showButtonAddChois(context, Task());
-        },
-        backgroundColor: primaryClr,
-        child: Icon(Icons.add),
+        onPressed: ()async {
+          await Get.to(()=>pigUpdate());           
+          },
+       
+        backgroundColor: Get.isDarkMode?primaryClr:Colors.white,
+        child: Icon(Icons.edit_document,
+        color: Get.isDarkMode?Colors.white:primaryClr,
+        ),
+        
         
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: BottomAppBar(
+          shape:  CircularNotchedRectangle(),
+          // notchMargin: 10,
+          child: Container(
+            
+            height: 67,
+            decoration: BoxDecoration(
+              color:  Get.isDarkMode?primaryClr:Colors.white,
+              boxShadow: [
+                        BoxShadow(
+                          color:  Get.isDarkMode?Colors.white:Colors.grey,
+                          spreadRadius: 0,
+                          blurRadius: 1,
+                          offset: Offset(0, 1)
+                        )
+                      ], 
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    MaterialButton(
+                      minWidth: 40,
+                      onPressed: () async {
+                      await  Get.to(()=>AddTaskPage());
+                      _taskController.getTask();
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.notification_add_outlined,
+                           color: Get.isDarkMode?Colors.white:primaryClr,
+                          ),
+                          Text(
+                            'Jadwal',
+                            style: subStyle.copyWith(color: Get.isDarkMode?Colors.white:Colors.black,),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    MaterialButton(
+                      minWidth: 40,
+                      onPressed: ()async {
+                        await Get.to(()=>AddNote());
+                        _taskController.getTask();
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.event_note_rounded ,
+                            color: Get.isDarkMode?Colors.white:primaryClr,
+                          ),
+                          Text(
+                            'Catatan',
+                            style: subStyle.copyWith(color: Get.isDarkMode?Colors.white:Colors.black,),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
     );
     
   }
@@ -259,50 +345,7 @@ _showTask(){
     );
   }
 
-  showButtonAddChois(BuildContext context, Task task){
-    Get.bottomSheet(
-      Container(//menambah bagian saat ditekn warna putih
-        height: task.isCompleted==1?
-        MediaQuery.of(context).size.height*0.20:
-        MediaQuery.of(context).size.height*0.20,
-        // color: Colors.white,
-         decoration: BoxDecoration(
-         color: Get.isDarkMode? darkGreyClr:Colors.white,
-         border: Border.all(color:Get.isDarkMode? darkGreyClr:Colors.white,),
-         borderRadius: const BorderRadius.only(topLeft: Radius.circular(40),topRight: Radius.circular(40))
-         ),
-        child: Column(
-          children: [
-            Spacer(),
-             _buttonSheetButton(
-              label: "Penjadwalan",
-               onTap: () async {
-                await  Get.to(()=>AddTaskPage());
-                _taskController.getTask();
-                Get.back();
-               },
-               clr: primaryClr,
-               context:context,
-               ),
-               _buttonSheetButton(
-                  label: "Catatan",
-                  onTap: () async {
-                 await  Get.to(()=>AddTaskPage());
-                _taskController.getTask();
-                  Get.back();
-               },
-                 clr: greenClr,
-                  context:context,
-               ),
-               Spacer(),
- 
-          ],
-        ),
-      )
-    );
-  }
-
-
+  
 _buttonSheetButton({
 required String label, 
   required Function()? onTap,
@@ -348,7 +391,9 @@ required String label,
         //  borderRadius: const BorderRadius.only(topLeft: Radius.circular(40),topRight: Radius.circular(40))
         //  ),
           child: DatePicker(
-           DateTime.now(),
+          DateTime.now(),
+          // firstDate : DateTime(2021),
+          // lastDate : DateTime.now(),
            height: 110,
             width: 80,
             locale: 'id',
@@ -410,10 +455,10 @@ required String label,
               ],
             )
             ),
-          MyBotton(label: "+ Tambah ", onTap: () async {
-           await  Get.to(()=>AddTaskPage());
+          MyBotton(label: "120 ekor ", onTap: () async {
+           await  Get.to(()=>const pigUpdate());
            
-           _taskController.getTask();
+          // _taskController.getTask();
             }
           )
           ],

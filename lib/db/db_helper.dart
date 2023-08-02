@@ -1,12 +1,14 @@
 
 import 'package:sqflite/sqflite.dart';
 
+import '../models/note.dart';
 import '../models/task.dart';
 
 class DBHelper{
   static Database? _db;
   static final int _version=1;
   static final String _tableName="tasks";
+  static final String _tableNote="tasks";
 
   static Future <void> initDb() async{
     if(_db !=null){
@@ -17,18 +19,31 @@ class DBHelper{
       _db=await openDatabase(
         _path,
         version: _version,
-        onCreate: (db, version){
+        onCreate: (db, version) async{
           print("Create new one");
-          return db.execute(
-            "CREATE TABLE $_tableName("
+          await db.execute(
+            "CREATE TABLE IF NOT EXISTS $_tableName("
             "id INTEGER PRIMARY KEY AUTOINCREMENT,"
             "title STRING, note TEXT, date STRING,"
             "startTime STRING, endTime STRING,"
             "remind INTEGER, repeat STRING,"
             "color INTEGER,"
             "isCompleted INTEGER)",
+            
           );
+          await  db.execute(
+            "CREATE TABLE IF NOT EXISTS $_tableNote("
+            "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            "judul STRING, keterangan TEXT, date STRING,"
+            "startTime STRING, endTime STRING,"
+            "repeat STRING,"
+            "color INTEGER,"
+            "isCompleted INTEGER)",
+            
+          );
+          
         },
+        
 
       );
     }catch(e){
@@ -39,11 +54,20 @@ class DBHelper{
     print("query function called");
     return await _db!.query(_tableName);
   }
+  //note
+   static Future<List<Map<String, dynamic>>> query2() async{
+    print("query function called 4" );
+    return await _db!.query(_tableNote);
+  }
   static Future<int> insert(Task? task)async{
     print("insert funtion called");
     return await _db?.insert(_tableName, task!.toJson())??1;
   }
- 
+ //note
+ static Future<int> insertnote(Note? note)async{
+    print("insert funtion called 2");
+    return await _db?.insert(_tableNote, note!.toJson())??2;
+  }
   static delete(Task task) async {
   return await  _db!.delete(_tableName,where: 'id=?', whereArgs: [task.id]);
   }
@@ -54,4 +78,5 @@ class DBHelper{
   WHERE id = ?
 ''',[1,id]);
   }
+  
 }

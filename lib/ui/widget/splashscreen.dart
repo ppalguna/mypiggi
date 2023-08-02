@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+//import 'package:get/get.dart';
 
 import 'package:my_piggy_app/ui/home_page.dart';
 import 'package:my_piggy_app/ui/theme.dart';
@@ -43,5 +44,6 @@ class _SplashScreenState extends State<SplashScreen>{
         ),
       ),
     );
+    
   }
 }

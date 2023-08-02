@@ -34,19 +34,6 @@ class NotifyHelper{
     );
     
   }
-  Future notificationResponse(String? payload) async {
-    if (payload != null) {
-      print('notification payload: $payload');
-    } else {
-      print("Notification Done");
-    }
-    
-      Get.to(()=>NotifiedPage(label: payload));
-    
-     
-  }
-
-
   Future onDidReceiveLocalNotification(
       int id, String? title, String? body, String? payload) async {
     // display a dialog with the notification details, tap ok to go to another page
@@ -138,6 +125,18 @@ class NotifyHelper{
     //print(timezone);
   }
  
-  
+ Future notificationResponse(String? payload) async {
+    if (payload != null) {
+      print('notification payload: $payload');
+    } else {
+      print("Notification Done");
+    }
+    OnTap(){
+       Get.to(()=>NotifiedPage(label: payload));
+    }
+   
+    
+     
+  } 
 }
 
