@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 //import 'package:get/get.dart';
 
 import 'package:my_piggy_app/ui/home_page.dart';
 import 'package:my_piggy_app/ui/theme.dart';
+
+import '../../controllers/task_controller.dart';
 
 class SplashScreen extends StatefulWidget{
   const SplashScreen({super.key});
@@ -14,6 +17,7 @@ class SplashScreen extends StatefulWidget{
 }
 
 class _SplashScreenState extends State<SplashScreen>{
+  final _taskController =Get.put(TaskController());
   @override
   void initState(){
     super.initState();
@@ -21,6 +25,7 @@ class _SplashScreenState extends State<SplashScreen>{
       Navigator.of(context)
       .pushReplacement(MaterialPageRoute(builder: (_)=>  HomePage()));
     });
+      _taskController.getTask();
   }
   @override
   Widget build(BuildContext context){

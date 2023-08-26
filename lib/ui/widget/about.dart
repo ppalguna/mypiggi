@@ -12,12 +12,12 @@ class About extends StatelessWidget {
       appBar: AppBar(
         bottomOpacity: 0.0,
         elevation: 0.0,
-        title: Text('               Tentang Pengembang', style: appbr,),
-        backgroundColor: Colors.white,
+        title: Text('Tentang Pengembang', style: subStyle.copyWith(color: Get.isDarkMode?Colors.white:Colors.black,),),
+        backgroundColor: context.theme.dialogBackgroundColor,
         leading: IconButton(
           onPressed: ()=>Get.back(),
           icon: const Icon(Icons.arrow_back_ios),
-          color: Get.isDarkMode?Colors.black:Colors.black,
+          color: Get.isDarkMode?Colors.white:Colors.black,
           
         ),
       ),
@@ -45,7 +45,7 @@ class About extends StatelessWidget {
                       child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                      Text("Gde Sastrawangsa, S.T., M.T.", style: subStyle),
+                      Text("Gde Sastrawangsa, S.T., M.T.", style: subStyle.copyWith(color:  Get.isDarkMode?Colors.white:Colors.black,)),
                         SizedBox(height: 30),
                       Text("Dosen", style: subStyle.copyWith(color: Colors.grey)),
                       Text("ITB STIKOM Bali", style: subStyle.copyWith(color: Colors.grey)),
@@ -89,7 +89,7 @@ class About extends StatelessWidget {
                       child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                      Text("I Ketut Putu Suniantara, S.Si., M.Si", style: subStyle),
+                      Text("I Ketut Putu Suniantara, S.Si., M.Si", style: subStyle.copyWith(color:  Get.isDarkMode?Colors.white:Colors.black,)),
                       SizedBox(height: 30),
                       Text("Dosen", style: subStyle.copyWith(color: Colors.grey)),
                       Text("ITB STIKOM Bali", style: subStyle.copyWith(color: Colors.grey)),
@@ -132,7 +132,7 @@ class About extends StatelessWidget {
                       child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                      Text("I Putu Palguna", style: subStyle),
+                      Text("I Putu Palguna", style: subStyle.copyWith(color:  Get.isDarkMode?Colors.white:Colors.black,)),
                       SizedBox(height: 50),
                       Text("Mahasiswa", style: subStyle.copyWith(color: Colors.grey)),
                       Text("ITB STIKOM Bali", style: subStyle.copyWith(color: Colors.grey)),

@@ -34,34 +34,6 @@ class NotifyHelper{
     );
     
   }
-  Future onDidReceiveLocalNotification(
-      int id, String? title, String? body, String? payload) async {
-    // display a dialog with the notification details, tap ok to go to another page
-    // showDialog(
-    //   //context: context,
-    //   builder: (BuildContext context) => CupertinoAlertDialog(
-    //     title: Text(title),
-    //     content: Text(body),
-    //     actions: [
-    //       CupertinoDialogAction(
-    //         isDefaultAction: true,
-    //         child: Text('Ok'),
-    //         onPressed: () async {
-    //           Navigator.of(context, rootNavigator: true).pop();
-    //           await Navigator.push(
-    //             context,
-    //             MaterialPageRoute(
-    //               builder: (context) => SecondScreen(payload),
-    //             ),
-    //           );
-    //         },
-    //       )
-    //     ],
-    //   ),
-    // );
-    Get.dialog(Text("Welcome to Flutter"));
-  }
-
 
   displayNotification({required String title, required String body})async {
     print("test");
@@ -131,12 +103,35 @@ class NotifyHelper{
     } else {
       print("Notification Done");
     }
-    OnTap(){
-       Get.to(()=>NotifiedPage(label: payload));
-    }
-   
-    
-     
+    Get.to(()=>NotifiedPage(label: payload));
   } 
+  Future onDidReceiveLocalNotification(
+      int id, String? title, String? body, String? payload) async {
+    // display a dialog with the notification details, tap ok to go to another page
+    // showDialog(
+    //   //context: context,
+    //   builder: (BuildContext context) => CupertinoAlertDialog(
+    //     title: Text(title),
+    //     content: Text(body),
+    //     actions: [
+    //       CupertinoDialogAction(
+    //         isDefaultAction: true,
+    //         child: Text('Ok'),
+    //         onPressed: () async {
+    //           Navigator.of(context, rootNavigator: true).pop();
+    //           await Navigator.push(
+    //             context,
+    //             MaterialPageRoute(
+    //               builder: (context) => SecondScreen(payload),
+    //             ),
+    //           );
+    //         },
+    //       )
+    //     ],
+    //   ),
+    // );
+    Get.dialog(Text("Welcome to Flutter"));
+  }
+
 }
 

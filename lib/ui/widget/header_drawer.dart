@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:get/get.dart';
+//import 'package:my_piggy_app/controllers/profil_controller.dart';
+//import 'package:my_piggy_app/models/profil.dart';
 import 'package:my_piggy_app/ui/theme.dart';
 
 import 'edit_profil.dart';
 class MyHeaderDrawer extends StatefulWidget{
   MyHeaderDrawer({Key? key}): super(key: key);
 
-
   @override
   _MyHeaderDrawerState createState() => _MyHeaderDrawerState();
 
 }
-
 class _MyHeaderDrawerState extends State <MyHeaderDrawer>{
-
+//final _profilControler=Get.put(ProfilController());
   @override
   Widget build(BuildContext context){
     return Container(
@@ -40,18 +40,21 @@ class _MyHeaderDrawerState extends State <MyHeaderDrawer>{
           ),
          Row(
            children: [
-           const Padding(
-             padding: const EdgeInsets.only(left: 80),
-             child: Column(
-                  children: [
-                  const Text("I Putu Palguna", style: TextStyle(color: Colors.white,fontSize: 20),),
-                  const Text("Ulian Pig Farm", style: TextStyle(color: Colors.white,fontSize:  14),),
-                  ],
-                ),
+            Padding(
+             padding:  EdgeInsets.only(left: 80),
+            //  child: ListView.builder(
+            //   itemCount: _profilControler.profilList.length,
+            //   itemBuilder:(context, index) {
+            //    return ListTile(
+            //     title: Text(_profilControler.profilList[index].namaPeternak ??''),
+            //     subtitle: Text(_profilControler.profilList[index].namaPeternakan ??''),
+            //    );
+            //   },
+            //  )
            ),
             IconButton(
                  onPressed: (){
-                    Get.to(()=>editProfil());           
+                    Get.to(()=>editProfil());          
                   },
                  icon: const Icon(
                  Icons.edit_square,

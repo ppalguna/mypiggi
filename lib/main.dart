@@ -5,6 +5,7 @@ import 'package:my_piggy_app/db/db_helper.dart';
 import 'package:my_piggy_app/services/theme_services.dart';
 import 'package:my_piggy_app/ui/theme.dart';
 import 'package:my_piggy_app/ui/widget/splashscreen.dart';
+//import 'package:my_piggy_app/ui/widget/splashscreen.dart';
 //import 'package:my_piggy_app/ui/widget/about.dart';
 //import 'package:my_piggy_app/ui/widget/splashscreen.dart';
 //import 'package:my_piggy_app/ui/widget/splashscreen.dart';

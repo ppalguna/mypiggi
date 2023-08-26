@@ -45,10 +45,10 @@ class _AddTaskPageState extends State<AddTaskPage> {
       appBar: AppBar(
         
         title: 
-        Text('Penjadwalan', style: subStyle,),
+        Text('Penjadwalan', style: subStyle.copyWith(color: Get.isDarkMode?Colors.white:Colors.black,),),
         bottomOpacity: 0.0,
         elevation: 0.0,
-        backgroundColor: Colors.white,
+        backgroundColor:context.theme.dialogBackgroundColor,
         leading: Container(
           child: IconButton(
             onPressed: ()=>Get.back(),
@@ -61,6 +61,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
       ),
       body: Container(
         padding: const EdgeInsets.only(left: 20, right: 20),
+        color: context.theme.dialogBackgroundColor,
         child: SingleChildScrollView(
           child : Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -317,5 +318,6 @@ _addTaskToDb() async {
   );
   print("my id is"+" $value");
 }
+
 }
 

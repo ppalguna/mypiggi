@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:my_piggy_app/controllers/note_controller.dart';
 //import 'package:my_piggy_app/controllers/task_controller.dart';
@@ -9,8 +12,9 @@ import 'package:my_piggy_app/ui/theme.dart';
 import 'package:my_piggy_app/ui/widget/button.dart';
 import 'package:my_piggy_app/ui/widget/input_field.dart';
 
+
 class AddNote extends StatefulWidget {
-   AddNote({super.key});
+   const AddNote({super.key});
 
   @override
   State<AddNote> createState() => _AddNoteState();
@@ -20,6 +24,15 @@ class AddNote extends StatefulWidget {
 class _AddNoteState extends State<AddNote> {
  //deklarasi variabel
   //datetime di panggil dengan _selectDate
+  File? image;
+  Future getImage()async{
+    final ImagePicker _picker = ImagePicker();
+    final XFile? imagePicked = await _picker.pickImage(source: ImageSource.camera);
+    image = File(imagePicked!.path);
+    setState(() {
+      
+    });
+  }
   final NoteController _noteController = Get.put(NoteController());
   final TextEditingController _judulController = TextEditingController();
   final TextEditingController _keteranganController  = TextEditingController();
@@ -39,10 +52,10 @@ class _AddNoteState extends State<AddNote> {
       appBar: AppBar(
         
         title: 
-        Text('Catatan', style: subStyle,),
+        Text('Catatan', style: subStyle.copyWith(color: Get.isDarkMode?Colors.white:Colors.black,),),
         bottomOpacity: 0.0,
         elevation: 0.0,
-        backgroundColor: Colors.white,
+        backgroundColor: context.theme.dialogBackgroundColor,
         leading: Container(
           child: IconButton(
             onPressed: ()=>Get.back(),
@@ -55,6 +68,7 @@ class _AddNoteState extends State<AddNote> {
       ),
       body: Container(
         padding: const EdgeInsets.only(left: 20, right: 20),
+        color: context.theme.dialogBackgroundColor,
         child: SingleChildScrollView(
           child : Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,7 +146,44 @@ class _AddNoteState extends State<AddNote> {
                 ).toList(),
               ),
              ),
-               SizedBox(height: 18,),
+              SizedBox(height: MediaQuery.of(context).size.height/50,),
+              Text('Tambah Gambar', style: titleStyle,),
+              Row(
+                children: [
+                  Container(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        image != null? Container(
+                           padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                           decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            border: Border.all(
+                            color: Colors.grey,
+                            width: 3
+                            )
+                          ),
+                        width:MediaQuery.of(context).size.width/3, 
+                        height: MediaQuery.of(context).size.height/7,
+                         child: Image.file(image!, fit: BoxFit.cover,))
+                         :
+                         Container(),
+                     
+                      ],
+                    ),
+                  ), 
+                  Container(
+                    child: IconButton(
+                      onPressed: ()async{
+                        await getImage();
+                      },
+                      icon: const Icon(Icons.add_a_photo),
+                    ),
+                  )
+                ],
+              ),  
                Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,

@@ -13,15 +13,19 @@ class NoteController extends GetxController{
   void onReady(){
     super.onReady();
   }
-  var taskList = <Note>[].obs;
+  var noteList = <Note>[].obs;
 
  Future< int > addNote({Future? showDialog, Note? note}) async{ 
   //Task model menjadi task object 
   return await DBHelper.insertnote(note);
  }
- void getTask() async {
+ void getNote() async {
   List<Map<String, dynamic>> note =await DBHelper.query2();
-  taskList.assignAll(note.map((datanote) => Note.fromJson(datanote)).toList());
+  noteList.assignAll(note.map((datanote) => Note.fromJson(datanote)).toList());
+ }
+ void deletenote(Note note){
+   DBHelper.deletenote(note);
+  getNote();
  }
 //  void getTask() async {
 //   List<Map<String, dynamic>> tasks =await DBHelper.query();

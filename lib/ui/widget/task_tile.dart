@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_piggy_app/ui/widget/notified_page.dart';
+import 'package:my_piggy_app/ui/widget/edit_jadwal.dart';
+// import 'package:my_piggy_app/ui/widget/notified_page.dart';
 
 import '../../models/task.dart';
 import '../theme.dart';
@@ -94,7 +95,7 @@ class TaskTile extends StatelessWidget {
             child:    
             IconButton(
              onPressed:  ()async {
-                        await Get.to(()=>NotifiedPage(label: ''));
+                        await Get.to(()=>EditJadwal());
                       },
              icon: const Icon(
              Icons.edit_notifications_outlined,

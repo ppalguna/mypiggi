@@ -9,6 +9,8 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:my_piggy_app/controllers/note_controller.dart';
+import 'package:my_piggy_app/controllers/pig_controller.dart';
 import 'package:my_piggy_app/controllers/task_controller.dart';
 import 'package:my_piggy_app/models/task.dart';
 import 'package:my_piggy_app/services/Notification_services.dart';
@@ -19,9 +21,12 @@ import 'package:my_piggy_app/ui/widget/about.dart';
 import 'package:my_piggy_app/ui/widget/add_note.dart';
 import 'package:my_piggy_app/ui/widget/button.dart';
 import 'package:my_piggy_app/ui/widget/header_drawer.dart';
+import 'package:my_piggy_app/ui/widget/note_Tile.dart';
 import 'package:my_piggy_app/ui/widget/pigHealth.dart';
 import 'package:my_piggy_app/ui/widget/pig_data.dart';
 import 'package:my_piggy_app/ui/widget/task_tile.dart';
+
+import '../models/note.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -34,16 +39,45 @@ class _HomePageState extends State<HomePage> {
   // ignore: unused_field
   DateTime _selectedDate = DateTime.now();
   final _taskController =Get.put(TaskController());
-  
+  final _noteController =Get.put(NoteController());
+  final _pigController = Get.put(PigController());
   var notifyHelper;
+  List<String> tabs = [
+    "Penjadwalan",
+    "Catatan",
+    
+  ];
+ 
+  int current = 0;
+    double changePositionedOfLine() {
+    switch (current) {
+      case 0:
+        return 0;
+      case 1:
+        return 100;
+     
+      default:
+        return 0;
+    }
+  }
+   double changeContainerWidth() {
+    switch (current) {
+      case 0:
+        return 95;
+      case 1:
+        return 60;
+     
+      default:
+        return 0;
+    }
+  }
+   
   @override
   void initState() {
   
     super.initState();
     notifyHelper=NotifyHelper();
     notifyHelper.initializeNotification();
-    
-
   }
   @override
   Widget build(BuildContext context) {
@@ -85,8 +119,69 @@ class _HomePageState extends State<HomePage> {
         children:  [
         _addTaskBar(),
         _addDateBar(),
-        SizedBox(height: 20,),
-        _showTask(), 
+         Container(
+              margin: const EdgeInsets.only(top: 15,left: 12),
+               width: MediaQuery.of(context).size.width,
+             height: MediaQuery.of(context).size.height/25,
+              child: Stack(
+                children: [
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      child: ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: tabs.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: EdgeInsets.only(
+                                  left: index == 0 ? 10 : 23, top: 0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    current = index;
+                                  });
+                                },
+                                child: Text(
+                                  tabs[index],
+                                  style: GoogleFonts.ubuntu(
+                                    fontSize: current == index ? 16 : 14,
+                                    fontWeight: current == index
+                                        ? FontWeight.w400
+                                        : FontWeight.w300,
+                                  ),
+                                ),
+                              ),
+                            );
+                          }),
+                    ),
+                  ),
+                  AnimatedPositioned(
+                    curve: Curves.fastLinearToSlowEaseIn,
+                    bottom: 0,
+                    left: changePositionedOfLine(),
+                    duration: const Duration(milliseconds: 1000),
+                    child: AnimatedContainer(
+                      margin: const EdgeInsets.only(left: 10),
+                      width: changeContainerWidth(),
+                      height: 3,
+                      decoration: BoxDecoration(
+                        color:primaryClr,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      duration: const Duration(milliseconds: 1000),
+                      curve: Curves.fastLinearToSlowEaseIn,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          SizedBox(height: 10,),
+          current==0? _showTask(): _showNote(),
         ],
         
       ),
@@ -94,7 +189,8 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         
         onPressed: ()async {
-          await Get.to(()=>pigUpdate());           
+          await Get.to(()=>pigUpdate());
+          _pigController.getPig();        
           },
        
         backgroundColor: Get.isDarkMode?primaryClr:Colors.white,
@@ -158,7 +254,7 @@ class _HomePageState extends State<HomePage> {
                       minWidth: 40,
                       onPressed: ()async {
                         await Get.to(()=>AddNote());
-                        _taskController.getTask();
+                        _noteController.getNote();
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -183,17 +279,92 @@ class _HomePageState extends State<HomePage> {
     );
     
   }
-  
+ _showNote(){
+   return Expanded(
+     child: Obx((){
+        return ListView.builder(
+          itemCount: _noteController.noteList.length,
+          
+         
+           itemBuilder: (_, indexn){
+      
+            Note note = _noteController.noteList[indexn];
+            
+            print(note.toJson());
+            // print(_noteController.noteList.length);
+            //menampilkan database yang sudah di inputkan
+             if(note.repeat=="Harian"){
+             DateTime date = DateFormat.Hm().parse(note.startTime.toString());
+             var myTimenote = DateFormat("HH:mm").format(date);
+             notifyHelper.scheduledNotification(
+              int.parse(myTimenote.toString().split(":")[0]),
+              int.parse(myTimenote.toString().split(":")[1]),
+              note 
+             );
+
+                return AnimationConfiguration.staggeredList(
+                position: indexn, 
+                child: SlideAnimation(
+                  child: FadeInAnimation(
+                    child: Row(
+                      children: [
+                        GestureDetector(
+                          onTap: (){
+                            showButtonSheetNote(context, note);
+                          },
+                          child: NoteTile(note),
+                        )
+                      ],
+                    ),
+                    
+                  ),
+                )
+                );
+             }
+             if(note.date==DateFormat.yMd().format(_selectedDate)){
+                 return AnimationConfiguration.staggeredList(
+                position: indexn, 
+                child: SlideAnimation(
+                  child: FadeInAnimation(
+                    child: Row(
+                      children: [
+                        GestureDetector(
+                          onTap: (){
+                            showButtonSheetNote(context, note);
+                          },
+                          child: NoteTile(note),
+                        )
+                      ],
+                    ),
+                    
+                  ),
+                )
+                );
+             }else{
+                return Container();
+             }
+           
+          });
+          
+          
+     }),
+     
+    );
+ } 
 _showTask(){
     return Expanded(
      child: Obx((){
         return ListView.builder(
           itemCount: _taskController.taskList.length,
+          
          
            itemBuilder: (_, index){
       
             Task task = _taskController.taskList[index];
-            print(task.toJson());//menampilkan database yang sudah di inputkan
+            
+            print(task.toJson());
+            // print(_noteController.noteList.length);
+            //menampilkan database yang sudah di inputkan
              if(task.repeat=="Harian"){
              DateTime date = DateFormat.Hm().parse(task.startTime.toString());
              var myTime = DateFormat("HH:mm").format(date);
@@ -247,11 +418,105 @@ _showTask(){
            
           });
           
+          
      }),
+     
     );
     
+    
   }
-  
+   showButtonSheetNote(BuildContext context, Note note){
+    Get.bottomSheet(
+      Container(//menambah bagian saat ditekn warna putih
+        padding: const EdgeInsets.only(top: 4),
+        height: note.isCompleted==1?
+        MediaQuery.of(context).size.height*0.20:
+        MediaQuery.of(context).size.height*0.25,
+        decoration: BoxDecoration(
+         color: Get.isDarkMode? darkGreyClr:Colors.white,
+         border: Border.all(color:Get.isDarkMode? darkGreyClr:Colors.white,),
+         borderRadius: const BorderRadius.only(topLeft: Radius.circular(40),topRight: Radius.circular(40))
+         ),
+        
+        child: Column(
+          children: [
+            Container(
+              height: 5,
+              width: 120,
+              decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color:Get.isDarkMode?Colors.grey[600]:Colors.grey[300]
+              ),
+            ),
+            Spacer(),
+          note.isCompleted==1
+          ?Container()
+            : _buttonSheetButton(
+              label: "Task Completed",
+               onTap: (){
+                Get.back();
+                _taskController.markTaskCompleted(note.id!);
+                _validateButtonCompleted();
+        
+               },
+               clr: primaryClr,
+               context:context,
+               ),
+              
+                _buttonSheetButton(
+                  label: "Delete",
+                  onTap: (){
+                    showDialog(
+                      context: context,
+                      builder: (_) => AlertDialog(
+                          title: const Text("Apakah anda yakin ingin menghapus data ini ?"),
+                          actions: [
+                        Column(
+                            children: [
+                            TextButton(
+                            child: Text('Batal'),
+                            onPressed: () => Get.back()
+                          ),
+                            ],
+                          ),
+                        Column(
+                          children: [
+                            TextButton(
+                            child: Text('Ya'),
+                            onPressed: (){
+                              Get.back();
+                              _noteController.deletenote(note);
+                              _validateButtonDelete();
+                             } 
+                            ),
+                            ],
+                          )                         
+                        ],            
+                      ),
+                  );
+                  
+                  },
+                  clr: Colors.red[300]!,
+                  context:context,
+               ),
+                const SizedBox(
+                  height: 10,
+                ),
+               _buttonSheetButton(
+                  label: "Close",
+                  onTap: (){
+                    Get.back();
+                  },
+                 clr: primaryClr,
+                  isColese: true,
+                  context:context,
+               ),
+ 
+          ],
+        ),
+      )
+    );
+  }
   showButtonSheet(BuildContext context, Task task){
     Get.bottomSheet(
       Container(//menambah bagian saat ditekn warna putih
@@ -385,19 +650,14 @@ required String label,
   _addDateBar(){
     return   Container(
           margin: const EdgeInsets.only(top:20, left: 20, right: 20),
-        //   decoration: BoxDecoration(
-        //   color: primaryClr,
-        //  border: Border.all(color: primaryClr),
-        //  borderRadius: const BorderRadius.only(topLeft: Radius.circular(40),topRight: Radius.circular(40))
-        //  ),
+       
           child: DatePicker(
+          
           DateTime.now(),
-          // firstDate : DateTime(2021),
-          // lastDate : DateTime.now(),
-           height: 110,
+           height: 90,
             width: 80,
             locale: 'id',
-            
+
             initialSelectedDate: DateTime.now(),
             selectionColor: primaryClr,
             selectedTextColor: Colors.white,
@@ -422,13 +682,16 @@ required String label,
               color:  Colors.grey
              )
             ),
+            
             onDateChange: (date){
              setState(() {
                 _selectedDate=date;
              });
             },
           ),
+          
          );
+         
   }
   _addTaskBar(){
      return Container(
@@ -485,15 +748,7 @@ required String label,
         color: Get.isDarkMode ? Colors.white:Colors.black
         ),
        ),
-      // actions: const [
-      //  CircleAvatar(
-      //   backgroundImage: AssetImage(
-      //     "images/profil.jpg"
-      //   ),
-      //  ),
       
-      //   SizedBox(width: 20,),
-      // ],
     );
   }
   
