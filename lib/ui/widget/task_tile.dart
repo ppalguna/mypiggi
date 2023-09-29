@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_piggy_app/ui/widget/edit_jadwal.dart';
-// import 'package:my_piggy_app/ui/widget/notified_page.dart';
+import 'package:my_piggy_app/ui/widget/detail_task.dart';
 
 import '../../models/task.dart';
 import '../theme.dart';
+import 'edit_jadwal.dart';
 
 
 class TaskTile extends StatelessWidget {
@@ -50,17 +50,17 @@ class TaskTile extends StatelessWidget {
                   ),
                 ),
                 ),
-               
+              //  Text(task?.date??""),
                 Text(
                   task?.title??"",
                   style: GoogleFonts.lato(
-                    textStyle: TextStyle(
+                    textStyle: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 12,
                 ),
                 Row(
@@ -71,7 +71,7 @@ class TaskTile extends StatelessWidget {
                       color: Colors.grey[200],
                       size: 18,
                     ),
-                    SizedBox(width: 4),
+                    const SizedBox(width: 4),
                     Text(
                       "${task!.startTime} - ${task!.endTime}",
                       style: GoogleFonts.lato(
@@ -81,7 +81,7 @@ class TaskTile extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
                 Text(
                   task?.note??"",
                   style: GoogleFonts.lato(
@@ -91,19 +91,29 @@ class TaskTile extends StatelessWidget {
               ],
             ),
           ),        
-           Container(
-            child:    
-            IconButton(
-             onPressed:  ()async {
-                        await Get.to(()=>EditJadwal());
-                      },
-             icon: const Icon(
-             Icons.edit_notifications_outlined,
-             color: Colors.white,
-            ),
-          ),
+           Column(
+             children: [
+               IconButton(
+                onPressed:  ()async {
+                           await Get.to(()=>EditJadwal(taskModel:task,));
+                         },
+                icon: const Icon(
+                Icons.edit_notifications_outlined,
+                color: Colors.white,
+               ),
+              ),
+              IconButton(
+                onPressed:  ()async {
+                       await Get.to(()=>detail(task));
+                        },
+                icon: const Icon(
+                Icons.grid_view_rounded,
+                color: Colors.white,
+              ),
+              ),
+             ],
+           ),
            
-          ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 10),
             height: 60,

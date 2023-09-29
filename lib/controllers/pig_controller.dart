@@ -27,4 +27,10 @@ class PigController extends GetxController{
    DBHelper.deletepig(pig);
   getPig();
  }
+
+var dbh =DBHelper.calculateInduk();
+var dbanakan =DBHelper.calculateAnakan();
+var dbpenggemukan =DBHelper.totalGemukan();
+//var dbpejantan =DBHelper.calculatePejantan();
+var p =DBHelper.p();
 }

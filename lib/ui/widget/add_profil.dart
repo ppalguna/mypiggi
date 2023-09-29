@@ -24,7 +24,7 @@ class editProfil extends StatefulWidget {
 class _editProfilState extends State<editProfil> {
   Uint8List? _image;
   void selectImage() async{
-    Uint8List img = await pickImage(ImageSource.gallery);
+    Uint8List img = await pickImage(ImageSource.gallery,50);
 
     setState(() {
        _image = img; 
@@ -35,8 +35,6 @@ class _editProfilState extends State<editProfil> {
    final TextEditingController _namaPeternakController = TextEditingController();
    final TextEditingController _namaPeternakanController= TextEditingController();
   DBHelper mydb = DBHelper();
-
- 
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -46,14 +44,13 @@ class _editProfilState extends State<editProfil> {
         Text('Edit Profil', style: subStyle.copyWith(color:Get.isDarkMode?Colors.white:Colors.black,),),
         bottomOpacity: 0.0,
         elevation: 0.0,
+        centerTitle: true,
         backgroundColor: context.theme.dialogBackgroundColor,
-        leading: Container(
-          child: IconButton(
-            onPressed: ()=>Get.back(),
-            icon: const Icon(Icons.arrow_back_ios),
-            color: Get.isDarkMode?Colors.white:Colors.black,
-            
-          ),
+        leading: IconButton(
+          onPressed: ()=>Get.back(),
+          icon: const Icon(Icons.arrow_back_ios),
+          color: Get.isDarkMode?Colors.white:Colors.black,
+          
         ),
     
       ),
@@ -83,40 +80,41 @@ class _editProfilState extends State<editProfil> {
                 )
               ],
              ),
-             Container(
-               child: Padding(
-                 padding: const EdgeInsets.all(30),
-                 
-                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                     MyInputField(title:"Nama Peternak", hint: "Masukan nama anda", controller: _namaPeternakController,),
-                     MyInputField(title:"Nama Peternakan", hint: "Masukan nama peternakan ", controller: _namaPeternakanController,),
+             Padding(
+               padding: const EdgeInsets.all(30),
                
-                     Container(
-                         width: MediaQuery.of(context).size.width/0.2,
-                         height: MediaQuery.of(context).size.height/6.3,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
+               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                   MyInputField(title:"Nama Peternak", hint: "Masukan nama anda", controller: _namaPeternakController,),
+                   MyInputField(title:"Nama Peternakan", hint: "Masukan nama peternakan ", controller: _namaPeternakanController,),
+             
+                   SizedBox(
+                       width: MediaQuery.of(context).size.width/0.2,
+                       height: MediaQuery.of(context).size.height/6.3,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            
+                            MyBotton(label: "Simpan ", onTap: () {
+                              _addProfilToDb();
+                              Get.snackbar("Sukses", "Input Jadwal Berhasil",
+                              snackPosition:  SnackPosition.BOTTOM,
+                              backgroundColor: primaryClr,
+                              icon: const Icon(Icons.beenhere_outlined,color: Colors.white,) ,
+                              colorText: Colors.white,
                               
-                              MyBotton(label: "Simpan ", onTap: () {
-                                _addProfilToDb();
+                              );  
                                
-                                Get.snackbar("Sukses", "Input Jadwal Berhasil",
-                                snackPosition:  SnackPosition.BOTTOM,
-                                backgroundColor: primaryClr,
-                                icon: const Icon(Icons.beenhere_outlined,color: Colors.white,) ,
-                                colorText: Colors.white,
-                                );  
-                              })  
-                            ],
-                          ),
-                        )
-                    
-                  ],
-                             ),
-               ),
+                            }) 
+                           
+                          ],
+                        ),
+                        
+                      )
+                  
+                ],
+                           ),
              )
             ],
             
@@ -133,12 +131,15 @@ class _editProfilState extends State<editProfil> {
   _addProfilToDb() async {
  int value = await _profilController.addProfil(
   profil : Profil(
+    id: 1,
      namaPeternak : _namaPeternakController.text,
      namaPeternakan: _namaPeternakanController.text,
      foto: _image.toString(),
     ),
   );
+  
   print("my id profil is"+" $value");
+  _profilController.getProfil();
   
 }
 }

@@ -5,13 +5,17 @@ class Pig{
   String? tipeUpdate;
   String? catatanPig;
   int? jumlah;
+  String?tanggal;
+  int?color;
 
     Pig( {
       this.id,
       this.jenisTernak,
       this.tipeUpdate,
       this.catatanPig,
-      this.jumlah
+      this.jumlah,
+      this.tanggal,
+      this.color
     });
   Pig.fromJson(Map<String,dynamic> json){
       id = json['id'];
@@ -19,6 +23,8 @@ class Pig{
       tipeUpdate = json['tipeUpdate'];
       catatanPig = json['catatanPig'];
       jumlah = json['jumlah'];
+      tanggal = json['tanggal'];
+      color = json['color'];
     }  
 
   Map<String,dynamic> toJson(){
@@ -28,6 +34,8 @@ class Pig{
       datapig['tipeUpdate']= tipeUpdate;
       datapig['catatanPig']= catatanPig;
       datapig['jumlah']= jumlah;
+      datapig['tanggal']= tanggal;
+      datapig['color']= color;
       return datapig;
 
 }

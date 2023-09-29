@@ -27,6 +27,10 @@ class NoteController extends GetxController{
    DBHelper.deletenote(note);
   getNote();
  }
+ void markNoteCompleted(int id) async{
+ await DBHelper.updateNote(id);
+ getNote();
+ }
 //  void getTask() async {
 //   List<Map<String, dynamic>> tasks =await DBHelper.query();
 //   taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());

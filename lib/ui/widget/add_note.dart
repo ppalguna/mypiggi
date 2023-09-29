@@ -1,6 +1,11 @@
-import 'dart:io';
+
+
+
+import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -11,6 +16,8 @@ import 'package:my_piggy_app/models/note.dart';
 import 'package:my_piggy_app/ui/theme.dart';
 import 'package:my_piggy_app/ui/widget/button.dart';
 import 'package:my_piggy_app/ui/widget/input_field.dart';
+
+import 'utils.dart';
 
 
 class AddNote extends StatefulWidget {
@@ -24,15 +31,18 @@ class AddNote extends StatefulWidget {
 class _AddNoteState extends State<AddNote> {
  //deklarasi variabel
   //datetime di panggil dengan _selectDate
-  File? image;
-  Future getImage()async{
-    final ImagePicker _picker = ImagePicker();
-    final XFile? imagePicked = await _picker.pickImage(source: ImageSource.camera);
-    image = File(imagePicked!.path);
+  
+  Uint8List? _image;
+  void selectImage() async{
+    Uint8List img = await pickImage(ImageSource.camera,30);
+
     setState(() {
-      
+       _image = img; 
+     //  print(_image!.lengthInBytes);
     });
+   
   }
+ // File? _coppressFile;
   final NoteController _noteController = Get.put(NoteController());
   final TextEditingController _judulController = TextEditingController();
   final TextEditingController _keteranganController  = TextEditingController();
@@ -40,6 +50,8 @@ class _AddNoteState extends State<AddNote> {
   String _endTime="09.30 PM";
   String _startTime = DateFormat("hh:mm a").format(DateTime.now()).toString();
   String _selectedRepeat ="Hari Ini";
+  late double _progress;
+  Timer? _timer;
   List<String> RepeatList=[
     "Hari ini",
     "Harian",
@@ -48,6 +60,7 @@ class _AddNoteState extends State<AddNote> {
   int _selectedColor=0;
   @override
   Widget build(BuildContext context) {
+   // 
     return Scaffold(
       appBar: AppBar(
         
@@ -55,14 +68,13 @@ class _AddNoteState extends State<AddNote> {
         Text('Catatan', style: subStyle.copyWith(color: Get.isDarkMode?Colors.white:Colors.black,),),
         bottomOpacity: 0.0,
         elevation: 0.0,
+        centerTitle: true,
         backgroundColor: context.theme.dialogBackgroundColor,
-        leading: Container(
-          child: IconButton(
-            onPressed: ()=>Get.back(),
-            icon: const Icon(Icons.arrow_back_ios),
-            color: Get.isDarkMode?Colors.white:Colors.black,
-            
-          ),
+        leading: IconButton(
+          onPressed: ()=>Get.back(),
+          icon: const Icon(Icons.arrow_back_ios),
+          color: Get.isDarkMode?Colors.white:Colors.black,
+          
         ),
     
       ),
@@ -76,7 +88,7 @@ class _AddNoteState extends State<AddNote> {
           
                MyInputField(title:"Nama Catatan", hint: "Masukan nama catatan anda", controller: _judulController,),
                MyInputField(title:"Catatan", hint: "Masukan catatan anda", controller: _keteranganController ,),
-               MyInputField(title: "Tanggal", hint: DateFormat.yMd().format(_selectedDate),
+               MyInputField(title: "Tanggal Catatan", hint: DateFormat.yMd().format(_selectedDate),
                widget: IconButton(
                 icon: Icon(Icons.calendar_today_outlined,
                 color:Colors.grey
@@ -155,7 +167,7 @@ class _AddNoteState extends State<AddNote> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        image != null? Container(
+                        _image != null? Container(
                            padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
                            decoration: BoxDecoration(
                             color: Colors.transparent,
@@ -167,21 +179,40 @@ class _AddNoteState extends State<AddNote> {
                           ),
                         width:MediaQuery.of(context).size.width/3, 
                         height: MediaQuery.of(context).size.height/7,
-                         child: Image.file(image!, fit: BoxFit.cover,))
+                         child: Image.memory(_image!, fit: BoxFit.cover,))
                          :
-                         Container(),
+                         Container(
+                          width:MediaQuery.of(context).size.width/4, 
+                          height: MediaQuery.of(context).size.height/12,
+                          decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            border: Border.all(
+                            color: Colors.grey,
+                            width: 1
+                            )
+                          ),
+                          child: Container(
+                            margin: EdgeInsets.all(10),
+                            padding: EdgeInsets.only(top: 10),
+                            child: Text('Gambar',textAlign: TextAlign.center)),),
                      
                       ],
                     ),
                   ), 
-                  Container(
-                    child: IconButton(
-                      onPressed: ()async{
-                        await getImage();
-                      },
-                      icon: const Icon(Icons.add_a_photo),
-                    ),
-                  )
+                  _image==null?
+                  IconButton(
+                    onPressed: ()async{
+                       selectImage();
+                    },
+                    icon: const Icon(Icons.add_a_photo),
+                  ): IconButton(
+                    onPressed: ()async{
+                       selectImage();
+                    },
+                    icon: const Icon(Icons.replay_outlined),
+                  ),
+                
                 ],
               ),  
                Row(
@@ -203,22 +234,6 @@ class _AddNoteState extends State<AddNote> {
   
   }
 
-_appBar(BuildContext context){
-    return AppBar(
-      elevation: 0,
-      backgroundColor: context.theme.dialogBackgroundColor,
-      leading: GestureDetector(
-        onTap: (){
-          Get.back();  
-        },
-        child: Icon(Icons.arrow_back_ios,
-        size: 20,
-        color: Get.isDarkMode ? Colors.white:Colors.black
-        ),
-      ),
-      
-    );
-  }
   //membuat fungsi(funtion)
 _getDateFromUser()async{
   DateTime? _pickerDate = await showDatePicker(
@@ -303,29 +318,69 @@ _colorPallete(){
  );
 }
 
-_validateDate(){
+_validateDate()async{
   if(_judulController.text.isNotEmpty&&_keteranganController.text.isNotEmpty){
     //add to database
-    _addNoteToDb();
+    await _addNoteToDb();
+    _progress = 0;
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(milliseconds: 25),
+    (Timer timer) {
+      EasyLoading.instance
+      ..displayDuration =const Duration(milliseconds: 1000)
+      ..loadingStyle =EasyLoadingStyle.custom //This was missing in earlier code
+      ..backgroundColor = primaryClr
+      ..progressColor = Colors.white
+      ..indicatorColor = Colors.white
+      ..progressColor = Colors.white
+      ..maskColor = Colors.white
+      ..textColor= Colors.white
+      ..dismissOnTap = true;
+      EasyLoading.showProgress(_progress,
+      status: '${(_progress * 100).toStringAsFixed(0)}%');
+      _progress += 0.03;
+if (_progress >= 1) {
+  _timer?.cancel();
+  EasyLoading.dismiss();
+  _noteController.getNote();
     Get.back();
-    Get.snackbar("Sukses", "Input Jadwal Berhasil",
-    snackPosition:  SnackPosition.BOTTOM,
-    backgroundColor: primaryClr,
-    icon: const Icon(Icons.beenhere_outlined,color: Colors.white,) ,
-    colorText: Colors.white,
+    Get.snackbar("Sukses", "Input Catatan Berhasil",
+     snackPosition:  SnackPosition.TOP,
+     backgroundColor: Colors.white,
+      boxShadows: [
+                  const BoxShadow(
+                    color: primaryClr,
+                    spreadRadius: 0,
+                    blurRadius: 1.5,
+                    offset: Offset(0, 0),
+                  )
+                ],
+    icon: Icon(Icons.beenhere_outlined,color: primaryClr,) ,
+    colorText: primaryClr,
     );  
-    
+                            
+  }
+});                  
   }else if(_judulController.text.isEmpty||_keteranganController.text.isEmpty){
     Get.snackbar("Required", "Lengkapi semua",
-    snackPosition:  SnackPosition.BOTTOM,
-    backgroundColor: Colors.red,
-    icon: Icon(Icons.warning_amber_rounded),
+    snackPosition:  SnackPosition.TOP,
+   backgroundColor: Colors.red,
+      boxShadows: [
+                  const BoxShadow(
+                    color: Colors.red,
+                    spreadRadius: 0,
+                    blurRadius: 1.5,
+                    offset: Offset(0, 0),
+                  )
+                ],
+    icon: Icon(Icons.warning_amber_outlined,color: Colors.white,) ,
     colorText: Colors.white,
     );  
   }
 }
 _addNoteToDb() async {
  int value = await _noteController.addNote(
+  
   note : Note(
     judul: _judulController.text,
     keterangan: _keteranganController.text,
@@ -335,6 +390,8 @@ _addNoteToDb() async {
     repeat: _selectedRepeat,
     color: _selectedColor,
     isCompleted: 0, 
+    
+    image: _image
     ),
   );
   print("my id is"+" $value");

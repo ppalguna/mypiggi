@@ -1,23 +1,20 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_piggy_app/controllers/profil_controller.dart';
+import 'package:my_piggy_app/models/profil.dart';
+import 'package:my_piggy_app/ui/theme.dart';
+import 'package:my_piggy_app/ui/widget/updateProfil.dart';
 
-import '../theme.dart';
-import 'add_profil.dart';
 
-class sideProfil extends StatelessWidget {
-  const sideProfil({super.key});
+class profilHeader extends StatelessWidget {
+  final Profil?profil;
+  const profilHeader({super.key, this.profil});
 
   @override
-  Widget build(BuildContext context){
-    final _profilController = Get.put(ProfilController());
-
-@override
-void initState(){
-  _profilController.getProfil();
-}
-    return Container(
+  Widget build(BuildContext context) {
+    ProfilController _profilController =ProfilController();
+    return  Container(
+     
       width:  double.infinity,
       height: 200,
       padding: const EdgeInsets.only(top: 20.0),
@@ -38,17 +35,14 @@ void initState(){
             ),   
             ), 
           ),
-         Row(
+            Row(
            children: [
-            Padding(
+            const Padding(
              padding:  EdgeInsets.only(left: 80),
-             child:  Text(_profilController.profilList[1].namaPeternak ??''),
-               
-             
            ),
             IconButton(
                  onPressed: (){
-                    Get.to(()=>editProfil());          
+                     Get.to(()=>updateProfil(profilModel: profil,));         
                   },
                  icon: const Icon(
                  Icons.edit_square,
@@ -57,9 +51,10 @@ void initState(){
                 ),
               ), 
            ],
-         ),  
-        ], 
-      ),
+         ),
+        ]
+      )
+    
     );
   }
 }

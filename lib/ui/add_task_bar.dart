@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:my_piggy_app/controllers/task_controller.dart';
@@ -24,14 +27,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
   DateTime _selectedDate= DateTime.now();// hari sekarang
   String _endTime="09.30 PM";
   String _startTime = DateFormat("hh:mm a").format(DateTime.now()).toString();
-  int _selectedRemind =5;
-  List<int> remindList=[
-    5,
-    10,
-    15,
-    20,
-
-  ];
+   late double _progress;
+  Timer? _timer;
   String _selectedRepeat ="Kosong";
   List<String> RepeatList=[
     "Kosong",
@@ -45,17 +42,16 @@ class _AddTaskPageState extends State<AddTaskPage> {
       appBar: AppBar(
         
         title: 
-        Text('Penjadwalan', style: subStyle.copyWith(color: Get.isDarkMode?Colors.white:Colors.black,),),
+        Text('Penjadwalan Ternak', style: subStyle.copyWith(color: Get.isDarkMode?Colors.white:Colors.black,),),
         bottomOpacity: 0.0,
         elevation: 0.0,
+        centerTitle: true,
         backgroundColor:context.theme.dialogBackgroundColor,
-        leading: Container(
-          child: IconButton(
-            onPressed: ()=>Get.back(),
-            icon: const Icon(Icons.arrow_back_ios),
-            color: Get.isDarkMode?Colors.white:Colors.black,
-            
-          ),
+        leading: IconButton(
+          onPressed: ()=>Get.back(),
+          icon: const Icon(Icons.arrow_back_ios),
+          color: Get.isDarkMode?Colors.white:Colors.black,
+          
         ),
     
       ),
@@ -67,11 +63,11 @@ class _AddTaskPageState extends State<AddTaskPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
           
-               MyInputField(title:"Judul", hint: "Masukan judul anda", controller: _titleController,),
+               MyInputField(title:"Judul Penjadwalan", hint: "Masukan judul anda", controller: _titleController,),
                MyInputField(title:"Catatan", hint: "Masukan catatan anda", controller: _noteController ,),
-               MyInputField(title: "Tanggal", hint: DateFormat.yMd().format(_selectedDate),
+               MyInputField(title: "Tanggal Kawin", hint: DateFormat.yMd().format(_selectedDate),
                widget: IconButton(
-                icon: Icon(Icons.calendar_today_outlined,
+                icon: const Icon(Icons.calendar_today_outlined,
                 color:Colors.grey
                 ) ,
                 onPressed: (){ //jika user klik widget akan muncul
@@ -115,29 +111,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                     )
                 ],
                ),
-               MyInputField(title: "Remind", hint: "$_selectedRemind minutes early",
-              widget: DropdownButton(
-                icon: Icon(Icons.keyboard_arrow_down,
-                color: Colors.grey,
-                ),
-                iconSize:  32,
-                elevation: 4,
-                style: subTitleStyle,
-                underline: Container(height: 0,),
-                onChanged : (String? newValue){
-                  setState(() {
-                    _selectedRemind = int.parse(newValue!);
-                  });
-                },
-                items: remindList.map<DropdownMenuItem<String>>((int value){
-                  return DropdownMenuItem<String>(
-                    value: value.toString(),
-                    child: Text(value.toString()),
-                    );
-                }
-                ).toList(),
-              ),
-             ),
+              
                MyInputField(title: "Pengulangan", hint: "$_selectedRepeat ",
               widget: DropdownButton(
                 icon: Icon(Icons.keyboard_arrow_down,
@@ -155,13 +129,13 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 items: RepeatList.map<DropdownMenuItem<String>>((String value){
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: Text(value, style: TextStyle(color:Colors.grey)),
+                    child: Text(value, style: const TextStyle(color:Colors.grey)),
                     );
                 }
                 ).toList(),
               ),
              ),
-               SizedBox(height: 18,),
+               const SizedBox(height: 18,),
                Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -170,7 +144,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                    MyBotton(label: "Simpan", onTap: ()=>_validateDate())
                     ],
                     ),
-                       SizedBox(height: 30,)
+                        SizedBox(height: MediaQuery.of(context).size.height/5)
                   ],
                 )
            
@@ -181,22 +155,6 @@ class _AddTaskPageState extends State<AddTaskPage> {
   
   }
 
-_appBar(BuildContext context){
-    return AppBar(
-      elevation: 0,
-      backgroundColor: context.theme.dialogBackgroundColor,
-      leading: GestureDetector(
-        onTap: (){
-          Get.back();  
-        },
-        child: Icon(Icons.arrow_back_ios,
-        size: 20,
-        color: Get.isDarkMode ? Colors.white:Colors.black
-        ),
-      ),
-      
-    );
-  }
   //membuat fungsi(funtion)
 _getDateFromUser()async{
   DateTime? _pickerDate = await showDatePicker(
@@ -281,23 +239,65 @@ _colorPallete(){
  );
 }
 
-_validateDate(){
+_validateDate()async{
   if(_titleController.text.isNotEmpty&&_noteController.text.isNotEmpty){
     //add to database
     _addTaskToDb();
+    _taskController.getTask(); 
+    _progress = 0;
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(milliseconds: 25),
+    (Timer timer) {
+      EasyLoading.instance
+      ..displayDuration =const Duration(milliseconds: 1000)
+      ..loadingStyle =EasyLoadingStyle.custom //This was missing in earlier code
+      ..backgroundColor = primaryClr
+      ..progressColor = Colors.white
+      ..indicatorColor = Colors.white
+      ..progressColor = Colors.white
+      ..maskColor = Colors.white
+      ..textColor= Colors.white
+      ..dismissOnTap = true;
+      EasyLoading.showProgress(_progress,
+      status: '${(_progress * 100).toStringAsFixed(0)}%');
+      _progress += 0.03;
+                                  
+if (_progress >= 1) {
+  _timer?.cancel();
+  EasyLoading.dismiss();
+   _taskController.getTask();
     Get.back();
     Get.snackbar("Sukses", "Input Jadwal Berhasil",
-    snackPosition:  SnackPosition.BOTTOM,
-    backgroundColor: primaryClr,
-    icon: const Icon(Icons.beenhere_outlined,color: Colors.white,) ,
-    colorText: Colors.white,
+     snackPosition:  SnackPosition.TOP,
+     backgroundColor: Colors.white,
+      boxShadows: [
+                  const BoxShadow(
+                    color: primaryClr,
+                    spreadRadius: 0,
+                    blurRadius: 1.5,
+                    offset: Offset(0, 0),
+                  )
+                ],
+    icon: Icon(Icons.beenhere_outlined,color: primaryClr,) ,
+    colorText: primaryClr,
     );  
-    
+                            
+  }
+});
+ 
   }else if(_titleController.text.isEmpty||_noteController.text.isEmpty){
     Get.snackbar("Required", "Lengkapi semua",
-    snackPosition:  SnackPosition.BOTTOM,
+    snackPosition:  SnackPosition.TOP,
     backgroundColor: Colors.red,
-    icon: Icon(Icons.warning_amber_rounded),
+      boxShadows: [
+                  const BoxShadow(
+                    color: Colors.red,
+                    spreadRadius: 0,
+                    blurRadius: 1.5,
+                    offset: Offset(0, 0),
+                  )
+                ],
+    icon: Icon(Icons.warning_amber_outlined,color: Colors.white,) ,
     colorText: Colors.white,
     );  
   }
@@ -310,10 +310,12 @@ _addTaskToDb() async {
     date: DateFormat.yMd().format(_selectedDate),
     startTime: _startTime,
     endTime: _endTime,
-    remind: _selectedRemind,
     repeat: _selectedRepeat,
     color: _selectedColor,
     isCompleted: 0, 
+    tanggalLahir: DateFormat.yMd().format(_selectedDate.add(Duration(days: 114))),
+    tanggalKebiri: DateFormat.yMd().format(_selectedDate.add(Duration(days: 129))),
+    tanggalSapih: DateFormat.yMd().format(_selectedDate.add(Duration(days: 152))),
     ),
   );
   print("my id is"+" $value");

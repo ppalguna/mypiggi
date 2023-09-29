@@ -17,6 +17,7 @@ class _pigHealthState extends State<pigHealth> {
       appBar: AppBar(
         bottomOpacity: 0.0,
         elevation: 0.0,
+        centerTitle: true,
         backgroundColor:context.theme.dialogBackgroundColor,
         title: 
         Text('Kesehatan Babi', style: subStyle.copyWith(color: Get.isDarkMode? Colors.white:Colors.black,),textAlign: TextAlign.end,),

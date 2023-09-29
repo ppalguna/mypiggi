@@ -1,3 +1,6 @@
+
+import 'dart:typed_data';
+
 class Note{
   int? id;
   String? judul;
@@ -8,6 +11,8 @@ class Note{
   String? endTime;
   int? color;
   String? repeat;
+  Uint8List?image;
+
 
     Note({
       this.id,
@@ -19,6 +24,8 @@ class Note{
       this.endTime,
       this.color,
       this.repeat,
+      this.image,
+
     });
   Note.fromJson(Map<String,dynamic> json){
       id = json['id'];
@@ -30,6 +37,7 @@ class Note{
       endTime = json['endTime'];
       color = json['color'];
       repeat = json['repeat'];
+      image = json['image'];
     }  
 
   Map<String,dynamic> toJson(){
@@ -43,6 +51,7 @@ class Note{
       datanote['endTime']= endTime;
       datanote['color']= color;
       datanote['repeat']= repeat;
+      datanote['image']= image;
       return datanote;
 
 }

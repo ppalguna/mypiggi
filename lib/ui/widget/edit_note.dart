@@ -1,64 +1,87 @@
+
+
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:my_piggy_app/controllers/task_controller.dart';
-import 'package:my_piggy_app/db/db_helper.dart';
-import 'package:my_piggy_app/models/task.dart';
+import 'package:my_piggy_app/controllers/note_controller.dart';
+//import 'package:my_piggy_app/controllers/task_controller.dart';
+import 'package:my_piggy_app/models/note.dart';
+//import 'package:my_piggy_app/models/task.dart';
 import 'package:my_piggy_app/ui/theme.dart';
 import 'package:my_piggy_app/ui/widget/button.dart';
 import 'package:my_piggy_app/ui/widget/input_field.dart';
 
-class EditJadwal extends StatefulWidget {
-  final Task? taskModel;
-   EditJadwal({super.key, this.taskModel});
+import '../../db/db_helper.dart';
+import 'utils.dart';
+
+
+class editNote extends StatefulWidget {
+  final Note? noteModel;
+    editNote({super.key, this.noteModel});
 
   @override
-  State<EditJadwal> createState() => _EditJadwalState();
+  State<editNote> createState() => _editNoteState();
   
 }
 
-class _EditJadwalState extends State<EditJadwal> {
+class _editNoteState extends State<editNote> {
  //deklarasi variabel
   //datetime di panggil dengan _selectDate
-  final TaskController _taskController = Get.put(TaskController());
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _noteController  = TextEditingController();
   
+  Uint8List? _image;
+  void selectImage() async{
+    Uint8List img = await pickImage(ImageSource.camera,30);
+
+    setState(() {
+       _image = img; 
+     //  print(_image!.lengthInBytes);
+    });
+   
+  }
+  @override
+  void initState(){
+    _judulController.text=widget.noteModel!.judul??'';
+    _keteranganController.text=widget.noteModel!.keterangan??'';
+    _selectedDate = DateFormat.yMd().parse((widget.noteModel!.date??'') );
+    _startTime=widget.noteModel!.startTime??'';
+    _endTime =widget.noteModel!.endTime??'';
+    _selectedRepeat=widget.noteModel!.repeat??'';
+   _selectedColor=widget.noteModel!.color!.toInt();
+    _image=widget.noteModel!.image!;
+    
+    super.initState();
+  }
+ // File? _coppressFile;
+  final NoteController _noteController = Get.put(NoteController());
+  final TextEditingController _judulController = TextEditingController();
+  final TextEditingController _keteranganController  = TextEditingController();
   DateTime _selectedDate= DateTime.now();// hari sekarang
   String _endTime="09.30 PM";
   String _startTime = DateFormat("hh:mm a").format(DateTime.now()).toString();
-  String _selectedRepeat ="Kosong";
+  String _selectedRepeat ="Hari Ini";
   List<String> RepeatList=[
-    "Kosong",
+    "Hari ini",
     "Harian",
     "Mingguan",
   ];
   int _selectedColor=0;
   @override
-  void initState(){
-    _titleController.text=widget.taskModel!.title??'';
-    _noteController.text=widget.taskModel!.note??'';
-    _selectedDate = DateFormat.yMd().parse((widget.taskModel!.date??'') );
-    _startTime=widget.taskModel!.startTime??'';
-    _endTime =widget.taskModel!.endTime??'';
-    _selectedRepeat=widget.taskModel!.repeat??'';
-   _selectedColor=widget.taskModel!.color!.toInt();
-    
-    super.initState();
-  }
-  @override
   Widget build(BuildContext context) {
+   // 
     return Scaffold(
       appBar: AppBar(
         
         title: 
-        Text('Edit', style: subStyle.copyWith(color: Get.isDarkMode?Colors.white:Colors.black,),),
+        Text('Catatan', style: subStyle.copyWith(color: Get.isDarkMode?Colors.white:Colors.black,),),
         bottomOpacity: 0.0,
         elevation: 0.0,
         centerTitle: true,
-        backgroundColor:context.theme.dialogBackgroundColor,
+        backgroundColor: context.theme.dialogBackgroundColor,
         leading: IconButton(
-          onPressed: ()=>Get.back(),
+          onPressed: ()=>_showdialog(),
           icon: const Icon(Icons.arrow_back_ios),
           color: Get.isDarkMode?Colors.white:Colors.black,
           
@@ -73,9 +96,9 @@ class _EditJadwalState extends State<EditJadwal> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
           
-               MyInputField(title:"Judul", hint: "Masukan judul anda", controller: _titleController,),
-               MyInputField(title:"Catatan", hint: "Masukan catatan anda", controller: _noteController ,),
-               MyInputField(title: "Tanggal", hint: DateFormat.yMd().format(_selectedDate),
+               MyInputField(title:"Nama Catatan", hint: "Masukan nama catatan anda", controller: _judulController,),
+               MyInputField(title:"Catatan", hint: "Masukan catatan anda", controller: _keteranganController ,),
+               MyInputField(title: "Tanggal Catatan", hint: DateFormat.yMd().format(_selectedDate),
                widget: IconButton(
                 icon: Icon(Icons.calendar_today_outlined,
                 color:Colors.grey
@@ -145,18 +168,72 @@ class _EditJadwalState extends State<EditJadwal> {
                 ).toList(),
               ),
              ),
-               SizedBox(height: 18,),
+              SizedBox(height: MediaQuery.of(context).size.height/50,),
+              Text('Tambah Gambar', style: titleStyle,),
+              Row(
+                children: [
+                  Container(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _image != null? Container(
+                           padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                           decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            border: Border.all(
+                            color: Colors.grey,
+                            width: 3
+                            )
+                          ),
+                        width:MediaQuery.of(context).size.width/3, 
+                        height: MediaQuery.of(context).size.height/7,
+                         child: Image.memory(_image!, fit: BoxFit.cover,))
+                         :
+                         Container(
+                          width:MediaQuery.of(context).size.width/4, 
+                          height: MediaQuery.of(context).size.height/12,
+                          decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            border: Border.all(
+                            color: Colors.grey,
+                            width: 1
+                            )
+                          ),
+                          child: Container(
+                            margin: EdgeInsets.all(10),
+                            padding: EdgeInsets.only(top: 10),
+                            child: Text('Gambar',textAlign: TextAlign.center)),),
+                     
+                      ],
+                    ),
+                  ), 
+                  _image==null?
+                  IconButton(
+                    onPressed: ()async{
+                       selectImage();
+                    },
+                    icon: const Icon(Icons.add_a_photo),
+                  ): IconButton(
+                    onPressed: ()async{
+                       selectImage();
+                    },
+                    icon: const Icon(Icons.replay_outlined),
+                  ),
+                
+                ],
+              ),  
                Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                    _colorPallete(),
-                   MyBotton(label: "Simpan", onTap: ()async{
-                   await  _validatetask();
-                   })
+                   MyBotton(label: "Update", onTap: ()=>_validateDate())
                     ],
                     ),
-                       SizedBox(height:MediaQuery.of(context).size.height/3)
+                       SizedBox(height: 30,)
                   ],
                 )
            
@@ -251,48 +328,46 @@ _colorPallete(){
  );
 }
 
-_validatetask()async{
-  if(_titleController.text.isNotEmpty&&_noteController.text.isNotEmpty){
+_validateDate()async{
+  if(_judulController.text.isNotEmpty&&_keteranganController.text.isNotEmpty){
     //add to database
-     await DBHelper.UpdateTask(widget.taskModel!.id!, {
-                       "note": _noteController.text,
-                        'title': _titleController.text,
+     await DBHelper.UpdateNote(widget.noteModel!.id!, {
+                       'judul': _judulController.text,
+                        'keterangan': _keteranganController.text,
                         'date': DateFormat.yMd().format(_selectedDate),
                         'startTime': _startTime,
                         'endTime': _endTime,
                         'repeat': _selectedRepeat,
                         'color': _selectedColor,
-                        'isCompleted': 0, 
-                        'tanggalLahir': DateFormat.yMd().format(_selectedDate.add(Duration(days: 114))),
-                        'tanggalKebiri': DateFormat.yMd().format(_selectedDate.add(Duration(days: 129))),
-                        'tanggalSapih': DateFormat.yMd().format(_selectedDate.add(Duration(days: 152))),
+                         'image': _image,
+                       
                         
                     });
                      setState(() {           
-                       _taskController.getTask();
+                       _noteController.getNote();
                       
         });
-    _taskController.getTask();
+    _noteController.getNote();
     Get.back();
-    Get.snackbar("Sukses", "Update Jadwal Berhasil",
-   snackPosition:  SnackPosition.TOP,
+    Get.snackbar("Sukses", "Update Catatan Berhasil",
+    snackPosition:  SnackPosition.TOP,
     backgroundColor: Colors.white,
       boxShadows: [
-                  BoxShadow(
-                    color: primaryClr,
+                  const BoxShadow(
+                    color: primaryClr ,
                     spreadRadius: 0,
                     blurRadius: 1.5,
                     offset: Offset(0, 0),
                   )
                 ],
-    icon: Icon(Icons.beenhere_outlined,color: primaryClr,) ,
+    icon: const Icon(Icons.beenhere_outlined,color: primaryClr,) ,
     colorText: primaryClr,
     );  
     
-  }else if(_titleController.text.isEmpty||_noteController.text.isEmpty){
+  }else if(_judulController.text.isEmpty||_keteranganController.text.isEmpty){
     Get.snackbar("Required", "Lengkapi semua",
     snackPosition:  SnackPosition.TOP,
-    backgroundColor: Colors.red,
+   backgroundColor: Colors.red,
       boxShadows: [
                   const BoxShadow(
                     color: Colors.red,
@@ -306,21 +381,38 @@ _validatetask()async{
     );  
   }
 }
-_addTaskToDb() async {
- int value = await _taskController.addTask(
-  task : Task(
-    note: _noteController.text,
-    title: _titleController.text,
-    date: DateFormat.yMd().format(_selectedDate),
-    startTime: _startTime,
-    endTime: _endTime,
-    repeat: _selectedRepeat,
-    color: _selectedColor,
-    isCompleted: 0, 
-    ),
-  );
-  print("my id is"+" $value");
+_showdialog(){
+    return  showDialog(
+    context: context,
+     builder: (_) => AlertDialog(
+      
+        title: const Text("Anda yakin ingin meninggalkan halaman ini tanpa menyimpan?"),
+        actions: [
+        Column(
+          children: [
+             TextButton(
+          child: Text('Batal'),
+            onPressed: () => Get.back()
+           ),
+           ],
+           ),
+          Column(
+             children: [
+               TextButton(
+                    child: Text('Ya'),
+                       onPressed: (){
+                       Get.back();
+                       Get.back();
+                                      
+                       } 
+                    ),
+                  ],
+               )                         
+             ],  
+                                            
+            ),
+        );
+  }
 }
 
-}
 

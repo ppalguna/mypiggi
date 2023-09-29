@@ -35,11 +35,15 @@ class _SplashScreenState extends State<SplashScreen>{
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-          
-         
-            Image.asset(
-              'images/logosp.png',
-              height: 300,
+            
+            Container(
+            
+              padding: EdgeInsets.all(1),
+              child: Image.asset(
+                'images/logosp.png',
+                height: MediaQuery.of(context).size.height/2.5,
+              ),
+              
             ),
             
             // const CircularProgressIndicator.adaptive(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_piggy_app/ui/theme.dart';
+import 'package:social_media_flutter/social_media_flutter.dart';
 //import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class About extends StatelessWidget {
   const About({super.key});
@@ -12,151 +13,162 @@ class About extends StatelessWidget {
       appBar: AppBar(
         bottomOpacity: 0.0,
         elevation: 0.0,
+        centerTitle: true,
         title: Text('Tentang Pengembang', style: subStyle.copyWith(color: Get.isDarkMode?Colors.white:Colors.black,),),
         backgroundColor: context.theme.dialogBackgroundColor,
         leading: IconButton(
           onPressed: ()=>Get.back(),
           icon: const Icon(Icons.arrow_back_ios),
-          color: Get.isDarkMode?Colors.white:Colors.black,
+          color: Get.isDarkMode?Colors.white54:Colors.black,
           
         ),
       ),
     
+    backgroundColor: context.theme.dialogBackgroundColor,
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child:Container(
-                  height: MediaQuery.of(context).size.width/3,
-                  margin: const EdgeInsets.only(top: 40,),
-                  decoration:  const BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    image: DecorationImage(
-                    image: AssetImage('images/profil.jpg')
-                    
-                  ),  
-              )
-         )
-        ),   
-                 Expanded(
-                    child: Container(
-                      padding:EdgeInsets.only(top: 40),
-                      child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                      Text("Gde Sastrawangsa, S.T., M.T.", style: subStyle.copyWith(color:  Get.isDarkMode?Colors.white:Colors.black,)),
-                        SizedBox(height: 30),
-                      Text("Dosen", style: subStyle.copyWith(color: Colors.grey)),
-                      Text("ITB STIKOM Bali", style: subStyle.copyWith(color: Colors.grey)),
-                      //  IconButton(
-                      //     onPressed: (){
-                                  
-                      //     },
-                      //     icon: Icon(
-                      //     FontAwesomeIcons.instagram,
-
-                      //     color: Colors.grey,
-                      //     size:20,
-                          
-                      //   ),
-                      //   ), 
-                      ],
-                     ),
-                    ),
-                  
-                  ),
-            ],
+        
+          Container(
+          width:  double.infinity,
+          height:MediaQuery.of(context).size.height/1.2,
+          padding: const EdgeInsets.only(top: 30),
+          decoration: const BoxDecoration(
+            color: primaryClr,
+             borderRadius: BorderRadius.only(topLeft: Radius.circular(40),topRight: Radius.circular(40))
           ),
-         Row(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Expanded(
-                child:Container(
-                  height: MediaQuery.of(context).size.width/3,
-                  margin: EdgeInsets.only(top: 25),
-                  decoration:  const BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    border: Border(),
-                    image: DecorationImage(
-                    image: AssetImage('images/profil.jpg')
-                  ),  
-                    )
-                    )
-                    ),   
-                 Expanded(
-                    child: Container(
-                      margin: EdgeInsets.only(top: 20.0 ),
-                      child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                      Text("I Ketut Putu Suniantara, S.Si., M.Si", style: subStyle.copyWith(color:  Get.isDarkMode?Colors.white:Colors.black,)),
-                      SizedBox(height: 30),
-                      Text("Dosen", style: subStyle.copyWith(color: Colors.grey)),
-                      Text("ITB STIKOM Bali", style: subStyle.copyWith(color: Colors.grey)),
-                      //  IconButton(
-                      //     onPressed: (){
-                                  
-                      //     },
-                      //     icon: Icon(
-                      //     FontAwesomeIcons.instagram,
-
-                      //     color: Colors.grey,
-                      //     size:20,
-                          
-                      //   ),
-                      //   ), 
-                      ],
-                     ),
-                    ),
-                  
-                  ),
-            ],
-          ),
-            Row(
+              Container(
+                margin: const EdgeInsets.only(bottom: 10.0),
+                height: MediaQuery.of(context).size.height/8,
+                decoration:  const BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                  image: AssetImage('images/myfoto.jpg')
+                ),   
+                ), 
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height/30,),
+               Column(
             children: [
-              Expanded(
-                child:Container(
-                  height: MediaQuery.of(context).size.width/3,
-                  margin: EdgeInsets.only(top: 25),
-                  decoration:  const BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    image: DecorationImage(
-                    image: AssetImage('images/myfoto.jpg')
-                  ),  
-                    )
-                    )
-                    ),   
-                 Expanded(
-                    child: Container(
-                      margin: EdgeInsets.only(top: 40 ),
-                      child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                      Text("I Putu Palguna", style: subStyle.copyWith(color:  Get.isDarkMode?Colors.white:Colors.black,)),
-                      SizedBox(height: 50),
-                      Text("Mahasiswa", style: subStyle.copyWith(color: Colors.grey)),
-                      Text("ITB STIKOM Bali", style: subStyle.copyWith(color: Colors.grey)),
-                      //  IconButton(
-                      //     onPressed: (){
-                                  
-                      //     },
-                      //     icon: Icon(
-                      //     FontAwesomeIcons.instagram,
-
-                      //     color: Colors.grey,
-                      //     size:20,
-                          
-                      //   ),
-                      //   ), 
-                      ],
-                     ),
-                    ),
+              Text("TENTANG", style: subtitle.copyWith(fontSize: 17),),
+              Container(
+                padding: EdgeInsets.fromLTRB(50, 20, 50, 20),
+                child: Text("I Putu Palguna mahasiswa Institut Teknologi dan Bisnis STIKOM Bali"
+                ", Program Studi Sistem Komputer, dengan Konsentrasi Networking and Cyber Sercurity ", style: subtitle.copyWith(fontSize: 12), textAlign: TextAlign.justify,)),
                   
-                  ),
+              Text("SKILL", style: subtitle.copyWith(fontSize: 17),),
+               Column(
+                 children: [
+                   Container(
+                    padding: EdgeInsets.fromLTRB(50, 20, 50, 20),
+                    child: Container(
+                      padding: EdgeInsets.only(top: 5),
+                      height: MediaQuery.of(context).size.height/35,
+                      width: MediaQuery.of(context).size.width/3,
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        color: bgClr
+                      ),
+                      child: Text("FLutter Developer", 
+                      style: subtitle.copyWith(fontSize: 12),
+                      textAlign: TextAlign.center,)
+                      )
+                      
+                    ),
+                    Container(
+                    padding: EdgeInsets.fromLTRB(50, 0, 50, 20),
+                    child: Container(
+                      padding: EdgeInsets.only(top: 5),
+                      height: MediaQuery.of(context).size.height/35,
+                      width: MediaQuery.of(context).size.width/2,
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        color: bgClr
+                      ),
+                      child: Text("Adobe Premier and Photoshop", 
+                      style: subtitle.copyWith(fontSize: 12),
+                      textAlign: TextAlign.center,)
+                      )
+                      
+                    ),
+                 ],
+               ),
+              SizedBox(height: MediaQuery.of(context).size.height/30,),
+              Text("KONTAK", style: subtitle.copyWith(fontSize: 17),),
+              Container(
+                padding: EdgeInsets.fromLTRB(50, 20, 50, 20),
+                child: Column(
+                  children: [
+                   Row(children: [
+                    SizedBox(width: MediaQuery.of(context).size.width/200,),
+                    Icon(Icons.email,color: Colors.white,),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width/50,
+                      height: MediaQuery.of(context).size.height/30,
+                    ),
+                    Text("ippalguna@gmail.com", 
+                      style: subtitle.copyWith(fontSize: 12),
+                      textAlign: TextAlign.center,)
+                   ],),
+                   Row(children: [
+                    SocialWidget(
+                      placeholderText: 'pallgn_',
+                      iconSize: 20,
+                      iconData: SocialIconsFlutter.instagram,
+                      iconColor: Colors.white,
+                      link: 'https://www.instagram.com/pallgn_/',
+                      placeholderStyle: subtitle.copyWith(color: Colors.white, fontSize: 12)
+                      ,
+                    ),
+                   ],),
+                   Row(children: [
+                   SocialWidget(
+                      placeholderText: 'I Putu Palguna',
+                      iconSize: 20,
+                      iconData: SocialIconsFlutter.linkedin_box,
+                      iconColor: Colors.white,
+                      link: 'https://www.instagram.com/pallgn_/',
+                      placeholderStyle: subtitle.copyWith(color: Colors.white, fontSize: 12)
+                      ,
+                    ),
+                   ],)
+                  ],
+                )
+               ),
+                SizedBox(height: MediaQuery.of(context).size.height/15,),
+                Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.copyright,
+                            color: Get.isDarkMode?Colors.white:Colors.white,
+                            size: 13,
+                          ),
+                           Text("ITB STIKOM Bali", style: subtitle.copyWith(fontSize: 12),  textAlign: TextAlign.center, )
+                        ],
+                      ),
             ],
+          )
+            ]
+          )
           ),
+         
         ],
-      ),
+      )
     );
   }
+  cover()=>
+    Image.asset('images/myfoto.jpg');
+   myFoto(){
+    return
+    CircleAvatar(
+      child: Image.asset('images/myfoto.jpg'),
+      backgroundColor: primaryClr,
+      
+  );
+  }
+  
 }

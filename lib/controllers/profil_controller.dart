@@ -23,14 +23,7 @@ class ProfilController extends GetxController{
   List<Map<String, dynamic>> profil =await DBHelper.query3();
   profilList.assignAll(profil.map((dataprofil) => Profil.fromJson(dataprofil)).toList());
  }
-//  void getTask() async {
-//   List<Map<String, dynamic>> tasks =await DBHelper.query();
-//   taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
-//  }
-//  void delete(Task task){
-//    DBHelper.delete(task);
-//   getTask();
-//  }
+
 void updateprofil(int id) async{
 await DBHelper.update(id);
 getProfil();

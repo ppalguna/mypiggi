@@ -24,16 +24,17 @@ static final dark= ThemeData(
 TextStyle get subHeadingStyle{
   return GoogleFonts.ubuntu(
     textStyle: TextStyle(
-      fontSize: 24,
+      fontSize: 20,
       fontWeight: FontWeight.bold,
-      color: Get.isDarkMode?Colors.grey[400]:Colors.white
+      color: Get.isDarkMode?Colors.grey[400]:Colors.grey
     )
   );
 }
 TextStyle get headingStyle{
   return GoogleFonts.ubuntu(
     textStyle: TextStyle(
-      fontSize: 25,
+      fontSize: 22,
+      color: Color.fromARGB(255, 91, 91, 91),
       fontWeight: FontWeight.bold
     )
   );

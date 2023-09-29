@@ -1,14 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_piggy_app/models/pig.dart';
+import 'package:intl/intl.dart';
+import '../../models/pakan.dart';
 import '../theme.dart';
 
-
-class PigTile extends StatelessWidget {
-  final Pig? pig;
-  PigTile(this.pig, {super.key});
+class PakanTile extends StatelessWidget {
+  final Pakan? pakan;
+  PakanTile(this.pakan, {super.key});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,7 +20,7 @@ class PigTile extends StatelessWidget {
         //  width: SizeConfig.screenWidth * 0.78,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          color: _getBGClr(pig?.color??0),
+          color: primaryClr,
         ),
         child: Row(children: [
           Expanded(
@@ -42,12 +41,12 @@ class PigTile extends StatelessWidget {
                    Row(
                      children: [
                        Text(
-                          'Tanggal : ',
+                          'Tanggal Pakan : ',
                           style: subtitle.copyWith(fontSize: 10)
                         ),
                          SizedBox(width: 4),
                          Text(
-                          pig?.tanggal??"",
+                          pakan?.tanggalPakan??"",
                           style: subtitle.copyWith(fontSize: 15)
                         ),
                      ],
@@ -58,12 +57,15 @@ class PigTile extends StatelessWidget {
                    Row(
                      children: [
                        Text(
-                          'Jenis Ternak : ',
+                          'Jumlah Pakan: ',
                           style: subtitle.copyWith(fontSize: 10)
                         ),
                          SizedBox(width: 4),
                          Text(
-                          pig?.jenisTernak??"",
+                          pakan?.jumlahPakan.toString()??"",
+                          style: subtitle.copyWith(fontSize: 15)
+                        ),
+                        Text(" Sak",
                           style: subtitle.copyWith(fontSize: 15)
                         ),
                      ],
@@ -73,27 +75,15 @@ class PigTile extends StatelessWidget {
                 SizedBox(
                   height: 5,
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text("Tipe ",
-                   style: subtitle.copyWith(fontSize: 10)),
-                    SizedBox(width: 4),
-                    Text(
-                      pig?.tipeUpdate??"",
-                      style: subtitle,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 12),
+               
                 Text(
                   'Catatan : ',
                   style: subtitle.copyWith(fontSize: 10)
                 ),
                 SizedBox(width: 4),
                 Text(
-                  pig?.catatanPig??"",
-                  style: subtitle.copyWith(fontSize: 10)
+                  pakan?.catatanPakan??"",
+                  style: subtitle.copyWith(fontSize: 15)
                    
                 ),
               ],
@@ -106,27 +96,14 @@ class PigTile extends StatelessWidget {
             width: 0.5,
             color: Colors.grey[200]!.withOpacity(0.7),
           ),
-          
-          RotatedBox(
-            quarterTurns: 0,
-            child: Text(
-              pig?.jumlah.toString()??"",
+         Text(NumberFormat.currency(name: 'id-ID', decimalDigits: 0, symbol: 'Rp. ').format(pakan?.hargaPakan),
               style: GoogleFonts.lato(
-                textStyle: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
-              ),
-            ),
-          ),
-         Text(" Ekor",
-          style: GoogleFonts.lato(
                 textStyle: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
-          )
-         )
+              ),
+            ),
         ]),
         
       ),
@@ -134,26 +111,5 @@ class PigTile extends StatelessWidget {
     );
     
   }
-_validateButtonDeletePig(){
-    Get.back();
-    Get.snackbar("Sukses", "Jadwal Berhasil Dihapus",
-    snackPosition:  SnackPosition.BOTTOM,
-    backgroundColor: primaryClr,
-    icon: Icon(Icons.beenhere_outlined,color: Colors.white,) ,
-    colorText: Colors.white,
-    );  
-  
-  }
-    _getBGClr(int no) {
-    switch (no) {
-      case 0:
-        return bluishClr;
-      case 1:
-        return greenClr;
-      case 2:
-        return yellowClr;
-      default:
-        return bluishClr;
-    }
-  }
+
 }

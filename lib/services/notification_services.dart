@@ -4,17 +4,17 @@ import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:my_piggy_app/models/note.dart';
 import 'package:my_piggy_app/ui/widget/notified_page.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
-
 import '../models/task.dart';
-
 
 class NotifyHelper{
    FlutterLocalNotificationsPlugin
   flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
+      
 
   initializeNotification() async {
   _configureLocalTimezone();
@@ -41,7 +41,8 @@ class NotifyHelper{
     const AndroidNotificationDetails(
 
       'your chanel id','name',
-      importance: Importance.max, priority:Priority.high);
+      importance: Importance.max,
+      priority:Priority.high);
 
     // ignore: unnecessary_new
     var platformChannelSpecification = new NotificationDetails(
@@ -59,8 +60,8 @@ class NotifyHelper{
   scheduledNotification(int hour, int minutes,  Task task)async{
     await flutterLocalNotificationsPlugin.zonedSchedule(
       task.id!.toInt(),
-      task.title,
-      task.note,
+      'Hallo Peternak  ${task.title}',
+      'Catatan:  ${task.note}',
       _convertTime(hour, minutes),
       //tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
        const NotificationDetails(
@@ -74,6 +75,26 @@ class NotifyHelper{
        UILocalNotificationDateInterpretation.absoluteTime,
        matchDateTimeComponents: DateTimeComponents.time,
       payload: "${task.title}|"+"${task.note}|"
+       );
+  }
+   notescheduledNotification(int hour, int minutes,  Note note)async{
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      note.id!.toInt(),
+      note.judul,
+      note.keterangan,
+      _convertTime(hour, minutes),
+      //tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
+       const NotificationDetails(
+          android: AndroidNotificationDetails('yourd id',
+           'your chanel name',)), 
+  
+       
+       // ignore: deprecated_member_use
+       androidAllowWhileIdle: true,
+       uiLocalNotificationDateInterpretation: 
+       UILocalNotificationDateInterpretation.absoluteTime,
+       matchDateTimeComponents: DateTimeComponents.time,
+      payload: "${note.judul}|"+"${note.keterangan}|"
        );
   }
 
