@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_piggy_app/ui/theme.dart';
 import 'package:get/get.dart';
+import 'package:my_piggy_app/ui/theme.dart';
 
 class MyInputField2 extends StatelessWidget {
   final String title;
@@ -19,7 +19,7 @@ class MyInputField2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Container(
-      margin: EdgeInsets.only(top: 16),
+      margin: const EdgeInsets.only(top: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -29,8 +29,8 @@ class MyInputField2 extends StatelessWidget {
           ),
           Container(
             height: 52,
-            margin: EdgeInsets.only(top: 8.0),
-            padding: EdgeInsets.only(left: 14.0),
+            margin: const EdgeInsets.only(top: 8.0),
+            padding: const EdgeInsets.only(left: 14.0),
             decoration: BoxDecoration(
               border: Border.all(
                 color:  Colors.white,

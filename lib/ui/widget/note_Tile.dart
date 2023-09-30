@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 //import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_piggy_app/ui/widget/detail_note.dart';
 import 'package:my_piggy_app/ui/widget/edit_note.dart';
+
 //import 'package:my_piggy_app/ui/widget/notified_page.dart';
 
 import '../../models/note.dart';
@@ -13,7 +13,7 @@ import '../theme.dart';
 
 class NoteTile extends StatelessWidget {
   final Note? note;
-  NoteTile(this.note);
+  const NoteTile(this.note, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +21,9 @@ class NoteTile extends StatelessWidget {
       padding:
       const EdgeInsets.symmetric(horizontal: 20),
       width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 12),
       child: Container(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         //  width: SizeConfig.screenWidth * 0.78,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
@@ -81,7 +81,7 @@ class NoteTile extends StatelessWidget {
                           color: Colors.grey[200],
                           size: 18,
                         ),
-                        SizedBox(width: 4),
+                        const SizedBox(width: 4),
                         Text('${note!.date}',
                           // "${note!.startTime} - ${note!.endTime}",
                           style: GoogleFonts.lato(
@@ -91,7 +91,7 @@ class NoteTile extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 12),
+                    const SizedBox(height: 12),
                     Text(
                       note?.keterangan??"",
                       style: GoogleFonts.lato(

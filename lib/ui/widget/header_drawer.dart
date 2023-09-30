@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_piggy_app/controllers/profil_controller.dart';
@@ -41,14 +40,14 @@ void initState(){
          Row(
            children: [
             Padding(
-             padding:  EdgeInsets.only(left: 80),
+                padding: const EdgeInsets.only(left: 80),
              child:  Text(_profilController.profilList[1].namaPeternak ??''),
                
              
            ),
             IconButton(
                  onPressed: (){
-                    Get.to(()=>editProfil());          
+                  Get.to(() => const editProfil());          
                   },
                  icon: const Icon(
                  Icons.edit_square,

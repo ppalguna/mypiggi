@@ -9,10 +9,6 @@ class ProfilController extends GetxController{
   get text => null;
 
 
-  @override
-  void onReady(){
-    super.onReady();
-  }
   var profilList = <Profil>[].obs;
 
  Future< int > addProfil({Future? showDialog, Profil? profil}) async{ 

@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 //import 'package:get/get.dart';
@@ -23,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen>{
     super.initState();
     Timer(const Duration(seconds: 4),(){
       Navigator.of(context)
-      .pushReplacement(MaterialPageRoute(builder: (_)=>  HomePage()));
+          .pushReplacement(MaterialPageRoute(builder: (_) => const HomePage()));
     });
       _taskController.getTask();
   }
@@ -38,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen>{
             
             Container(
             
-              padding: EdgeInsets.all(1),
+              padding: const EdgeInsets.all(1),
               child: Image.asset(
                 'images/logosp.png',
                 height: MediaQuery.of(context).size.height/2.5,

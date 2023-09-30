@@ -1,6 +1,7 @@
 
 import 'package:get/get.dart';
 import 'package:my_piggy_app/db/db_helper.dart';
+
 import '../models/pig.dart';
 
 
@@ -8,11 +9,6 @@ class PigController extends GetxController{
   get text => null;
 
 
-  @override
-  void onReady(){
-    super.onReady();
-    
-  }
   var pigList = <Pig>[].obs;
 
  Future< int > addPig({Future? showDialog, Pig? pig}) async{ 

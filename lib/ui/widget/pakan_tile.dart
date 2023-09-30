@@ -1,22 +1,22 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+
 import '../../models/pakan.dart';
 import '../theme.dart';
 
 class PakanTile extends StatelessWidget {
   final Pakan? pakan;
-  PakanTile(this.pakan, {super.key});
+  const PakanTile(this.pakan, {super.key});
   @override
   Widget build(BuildContext context) {
     return Container(
       padding:
-      EdgeInsets.symmetric(horizontal: 20),
+      const EdgeInsets.symmetric(horizontal: 20),
       width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 12),
       child: Container(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         //  width: SizeConfig.screenWidth * 0.78,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
@@ -30,7 +30,7 @@ class PakanTile extends StatelessWidget {
                 Container(
                   width: MediaQuery.of(context).size.width/2.5,
                   //height: MediaQuery.of(context).size.height/33,
-                  decoration:BoxDecoration(
+                  decoration: const BoxDecoration(
                      color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(5))
                   ),
@@ -44,14 +44,14 @@ class PakanTile extends StatelessWidget {
                           'Tanggal Pakan : ',
                           style: subtitle.copyWith(fontSize: 10)
                         ),
-                         SizedBox(width: 4),
+                        const SizedBox(width: 4),
                          Text(
                           pakan?.tanggalPakan??"",
                           style: subtitle.copyWith(fontSize: 15)
                         ),
                      ],
                    ),
-                    SizedBox(
+                    const SizedBox(
                   height: 5,
                 ),
                    Row(
@@ -60,7 +60,7 @@ class PakanTile extends StatelessWidget {
                           'Jumlah Pakan: ',
                           style: subtitle.copyWith(fontSize: 10)
                         ),
-                         SizedBox(width: 4),
+                        const SizedBox(width: 4),
                          Text(
                           pakan?.jumlahPakan.toString()??"",
                           style: subtitle.copyWith(fontSize: 15)
@@ -72,7 +72,7 @@ class PakanTile extends StatelessWidget {
                    ),
                  ],
                ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                
@@ -80,7 +80,7 @@ class PakanTile extends StatelessWidget {
                   'Catatan : ',
                   style: subtitle.copyWith(fontSize: 10)
                 ),
-                SizedBox(width: 4),
+                const SizedBox(width: 4),
                 Text(
                   pakan?.catatanPakan??"",
                   style: subtitle.copyWith(fontSize: 15)
@@ -91,7 +91,7 @@ class PakanTile extends StatelessWidget {
           ),        
           
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 10),
+            margin: const EdgeInsets.symmetric(horizontal: 10),
             height: 60,
             width: 0.5,
             color: Colors.grey[200]!.withOpacity(0.7),

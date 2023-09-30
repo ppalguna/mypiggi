@@ -7,7 +7,7 @@ import 'time_line.dart';
 
 class detail extends StatelessWidget {
   final Task? task;
-  detail(this.task);
+  const detail(this.task, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +70,9 @@ class detail extends StatelessWidget {
                     height: MediaQuery.of(context).size.height/1.25,
                     decoration:  BoxDecoration(
                       color: _getBGClr(task?.color??0),
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(40),topRight: Radius.circular(40))
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(40),
+                            topRight: Radius.circular(40))
                     ),
                     
                     child: Padding(
@@ -85,8 +87,9 @@ class detail extends StatelessWidget {
                               Container(
                                 width: double.infinity,
                                 height: MediaQuery.of(context).size.height/7,
-                                margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                                padding: EdgeInsets.only(bottom: 10),
+                                  margin:
+                                      const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                                  padding: const EdgeInsets.only(bottom: 10),
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                   color: context.theme.dialogBackgroundColor, width: 1),
@@ -94,7 +97,8 @@ class detail extends StatelessWidget {
                                   shape: BoxShape.rectangle,
                                 ),
                                 child: SingleChildScrollView(
-                                    padding: EdgeInsets.fromLTRB(10, 20, 0, 5),
+                                    padding:
+                                        const EdgeInsets.fromLTRB(10, 20, 0, 5),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,

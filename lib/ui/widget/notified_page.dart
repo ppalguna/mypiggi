@@ -14,10 +14,12 @@ class NotifiedPage extends StatelessWidget {
         backgroundColor: primaryClr,
         leading: IconButton(
           onPressed: ()=>Get.back(),
-          icon: Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.arrow_back_ios),
           color: Get.isDarkMode?Colors.white:Colors.white,
         ),
-        title: Text(label.toString().split("|")[0], style: TextStyle(
+        title: Text(
+          label.toString().split("|")[0],
+          style: const TextStyle(
           color: Colors.black
         ),),
       ),

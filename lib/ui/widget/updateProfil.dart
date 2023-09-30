@@ -1,14 +1,13 @@
 import 'dart:typed_data';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:my_piggy_app/db/db_helper.dart';
 import 'package:my_piggy_app/models/profil.dart';
 import 'package:my_piggy_app/ui/widget/input_field.dart';
 import 'package:my_piggy_app/ui/widget/utils.dart';
-import 'package:my_piggy_app/db/db_helper.dart';
+
 import '../../controllers/profil_controller.dart';
 import '../theme.dart';
 import 'button.dart';
@@ -16,7 +15,7 @@ import 'button.dart';
 
 class updateProfil extends StatefulWidget {
   final Profil? profilModel;
-   updateProfil({super.key, this.profilModel});
+  const updateProfil({super.key, this.profilModel});
 
   @override
   State<updateProfil> createState() => _updateProfilState();

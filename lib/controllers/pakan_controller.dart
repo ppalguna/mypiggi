@@ -8,11 +8,6 @@ class PakanController extends GetxController{
   get text => null;
 
 
-  @override
-  void onReady(){
-    super.onReady();
-    
-  }
   var pakanList = <Pakan>[].obs;
 
  Future< int > addPakan({Future? showDialog, Pakan? pakan}) async{ 

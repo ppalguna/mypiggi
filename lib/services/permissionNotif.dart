@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:notification_permissions/notification_permissions.dart';
 
@@ -66,13 +65,13 @@ class _notifState extends State<notif> with WidgetsBindingObserver {
         ),
         body: Center(
             child: Container(
-          margin: EdgeInsets.all(20),
+        margin: const EdgeInsets.all(20),
           child: FutureBuilder(
             future: permissionStatusFuture,
             builder: (context, snapshot) {
               // if we are waiting for data, show a progress indicator
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator();
+              return const CircularProgressIndicator();
               }
 
               if (snapshot.hasError) {
@@ -82,7 +81,7 @@ class _notifState extends State<notif> with WidgetsBindingObserver {
               if (snapshot.hasData) {
                 var textWidget = Text(
                   "The permission status is ${snapshot.data}",
-                  style: TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
                   softWrap: true,
                   textAlign: TextAlign.center,
                 );
@@ -96,7 +95,7 @@ class _notifState extends State<notif> with WidgetsBindingObserver {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     textWidget,
-                    SizedBox(
+                  const SizedBox(
                       height: 20,
                     ),
                     GestureDetector(
@@ -118,7 +117,7 @@ class _notifState extends State<notif> with WidgetsBindingObserver {
                   ],
                 );
               }
-              return Text("No permission status yet");
+            return const Text("No permission status yet");
             },
           ),
         )),

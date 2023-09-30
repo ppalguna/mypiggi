@@ -66,17 +66,19 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+
 import '../../models/pakan.dart';
 import '../theme.dart';
 import 'input_field.dart';
 //import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 class dataDiagram extends StatefulWidget {
  
-   dataDiagram({super.key, });
+  const dataDiagram({
+    super.key,
+  });
 
   @override
   State<dataDiagram> createState() => _dataDiagramState();
@@ -165,8 +167,8 @@ class _dataDiagramState extends State<dataDiagram> {
               enableAxisAnimation: true,
               primaryXAxis: CategoryAxis(
                 autoScrollingDelta: 4,
-                majorGridLines: MajorGridLines(width: 0),
-                majorTickLines: MajorTickLines(width: 0),
+                    majorGridLines: const MajorGridLines(width: 0),
+                    majorTickLines: const MajorTickLines(width: 0),
                 ),
               zoomPanBehavior: ZoomPanBehavior(
                 enablePanning: true,

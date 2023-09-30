@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:my_piggy_app/ui/theme.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_piggy_app/ui/theme.dart';
 
 class MyBotton extends StatelessWidget {
   final String label;
@@ -24,10 +23,10 @@ class MyBotton extends StatelessWidget {
           color: primaryClr,
           boxShadow: [
                   BoxShadow(
-                    color: Color.fromARGB(255, 7, 0, 97).withOpacity(0.5),
+              color: const Color.fromARGB(255, 7, 0, 97).withOpacity(0.5),
                     spreadRadius: 0,
                     blurRadius: 1.5,
-                    offset: Offset(0, 0),
+              offset: const Offset(0, 0),
                   )
                 ],
         ),

@@ -5,6 +5,7 @@ import 'package:my_piggy_app/controllers/pakan_controller.dart';
 import 'package:my_piggy_app/models/pakan.dart';
 import 'package:my_piggy_app/ui/widget/pakan_tile.dart';
 import 'package:my_piggy_app/ui/widget/pig_tile.dart';
+
 import '../../controllers/pig_controller.dart';
 import '../../models/pig.dart';
 import '../theme.dart';
@@ -150,11 +151,11 @@ class _historyTernakState extends State<historyTernak> {
               ),
 
               Container(
-                padding: EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(top: 20),
                 child: Text('Data Ternak Kosong',style: subtitle.copyWith(color:Get.isDarkMode?Colors.white:Colors.grey,fontSize: 17, ),)),
               Container(
                 width: MediaQuery.of(context).size.width/1.3,
-                padding: EdgeInsets.only(top: 7),
+                padding: const EdgeInsets.only(top: 7),
                 child: Text('Ayo tambahkan data ternak anda\nmulai sekarang.',style: subtitle.copyWith(color:Get.isDarkMode?Colors.white:Colors.grey,fontSize: 12, ),textAlign: TextAlign.center,)),
              ],
           
@@ -202,11 +203,11 @@ class _historyTernakState extends State<historyTernak> {
               ),
 
               Container(
-                padding: EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(top: 20),
                 child: Text('Data pakan kosong',style: subtitle.copyWith(color:Get.isDarkMode?Colors.white:Colors.grey,fontSize: 17, ),)),
               Container(
                 width: MediaQuery.of(context).size.width/1.3,
-                padding: EdgeInsets.only(top: 7),
+                padding: const EdgeInsets.only(top: 7),
                 child: Text('Ayo tambahkan data pakan ternak \nanda mulai sekarang.',style: subtitle.copyWith(color:Get.isDarkMode?Colors.white:Colors.grey,fontSize: 12, ),textAlign: TextAlign.center,)),
              ],
           

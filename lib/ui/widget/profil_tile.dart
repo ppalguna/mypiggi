@@ -1,24 +1,24 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_piggy_app/models/profil.dart';
+
 import '../theme.dart';
 
 
 
 class profilTile extends StatelessWidget {
   final Profil? profil;
-  profilTile(this.profil);
+  const profilTile(this.profil, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding:
-      EdgeInsets.symmetric(horizontal: 20),
+      const EdgeInsets.symmetric(horizontal: 20),
       width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 12),
       child: Container(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         //  width: SizeConfig.screenWidth * 0.78,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),

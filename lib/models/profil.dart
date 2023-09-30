@@ -19,7 +19,7 @@ class Profil{
     }  
 
   Map<String,dynamic> toJson(){
-    final Map<String, dynamic>dataprofil = new Map<String, dynamic>();
+    final Map<String, dynamic> dataprofil = <String, dynamic>{};
       dataprofil['id']= id;
       dataprofil['namaPeternak']=namaPeternak;
       dataprofil['namaPeternakan']= namaPeternakan;

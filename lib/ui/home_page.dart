@@ -1,9 +1,7 @@
 
 import 'dart:core';
 import 'dart:io';
-import 'package:my_piggy_app/models/profil.dart';
-import 'package:my_piggy_app/ui/widget/profil.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -13,6 +11,7 @@ import 'package:intl/intl.dart';
 import 'package:my_piggy_app/controllers/note_controller.dart';
 import 'package:my_piggy_app/controllers/pig_controller.dart';
 import 'package:my_piggy_app/controllers/task_controller.dart';
+import 'package:my_piggy_app/models/profil.dart';
 import 'package:my_piggy_app/models/task.dart';
 import 'package:my_piggy_app/services/Notification_services.dart';
 import 'package:my_piggy_app/services/theme_services.dart';
@@ -23,7 +22,10 @@ import 'package:my_piggy_app/ui/widget/add_note.dart';
 import 'package:my_piggy_app/ui/widget/backup_restoredb.dart';
 import 'package:my_piggy_app/ui/widget/note_Tile.dart';
 import 'package:my_piggy_app/ui/widget/pigHealth.dart';
+import 'package:my_piggy_app/ui/widget/profil.dart';
 import 'package:my_piggy_app/ui/widget/task_tile.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+
 import '../models/note.dart';
 import '../services/permissionNotif.dart';
 import 'widget/dataDiagram.dart';
@@ -113,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                 title: const Text("Diagram Rekap"),
                 onTap: () async {
                   
-                 await  Get.to(()=> dataDiagram());
+                  await Get.to(() => const dataDiagram());
                },
               ),
                ListTile(
@@ -128,7 +130,9 @@ class _HomePageState extends State<HomePage> {
                 leading: const Icon(Icons.backup_table_sharp),
                 title: const Text("Backup dan Restore"),
                 onTap: () async {
-                 await  Get.to(()=>backupRestoreData(title: "",));
+                  await Get.to(() => const backupRestoreData(
+                        title: "",
+                      ));
                },
               ),
               ListTile(
@@ -249,8 +253,8 @@ class _HomePageState extends State<HomePage> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
-          shadowColor: primaryClr,
-          shape:    CircularNotchedRectangle(),
+        // shadowColor: primaryClr,
+        shape: const CircularNotchedRectangle(),
           
           height: MediaQuery.of(context).size.height/11,
           color:   Get.isDarkMode?primaryClr:Colors.white,
@@ -264,7 +268,7 @@ class _HomePageState extends State<HomePage> {
                   MaterialButton(
                     minWidth: 40,
                     onPressed: () async {
-                    await  Get.to(()=>AddTaskPage());
+                    await Get.to(() => const AddTaskPage());
                    const notif();
                     _taskController.getTask();
                     },
@@ -333,11 +337,11 @@ class _HomePageState extends State<HomePage> {
               ),
 
               Container(
-                padding: EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(top: 20),
                 child: Text('Catatan Ternak Kosong',style: subtitle.copyWith(color:Get.isDarkMode?Colors.white:Colors.grey,fontSize: 17, ),)),
               Container(
                 width: MediaQuery.of(context).size.width/1.3,
-                padding: EdgeInsets.only(top: 7),
+                padding: const EdgeInsets.only(top: 7),
                 child: Text('Ayo buat catatan ternak anda\nmulai sekarang.',style: subtitle.copyWith(color:Get.isDarkMode?Colors.white:Colors.grey,fontSize: 12, ),textAlign: TextAlign.center,)),
              ],
           
@@ -449,11 +453,11 @@ _showTask(){
               ),
 
               Container(
-                padding: EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(top: 20),
                 child: Text('Jadwal Ternak Kosong',style: subtitle.copyWith(color:Get.isDarkMode?Colors.white:Colors.grey,fontSize: 17, ),)),
               Container(
                 width: MediaQuery.of(context).size.width/1.3,
-                padding: EdgeInsets.only(top: 7),
+                padding: const EdgeInsets.only(top: 7),
                 child: Text('Ayo buat jadwal ternak anda\nmulai sekarang.',style: subtitle.copyWith(color:Get.isDarkMode?Colors.white:Colors.grey,fontSize: 12, ),textAlign: TextAlign.center,)),
              ],
           
@@ -586,7 +590,7 @@ _showTask(){
               color:Get.isDarkMode?Colors.grey[600]:Colors.grey[300]
               ),
             ),
-            Spacer(),
+          const Spacer(),
           note.isCompleted==1
           ?Container():
             // : _buttonSheetButton(
@@ -612,7 +616,7 @@ _showTask(){
                         Column(
                             children: [
                             TextButton(
-                            child: Text('Batal'),
+                                  child: const Text('Batal'),
                             onPressed: () => Get.back()
                           ),
                             ],
@@ -620,7 +624,7 @@ _showTask(){
                         Column(
                           children: [
                             TextButton(
-                            child: Text('Ya'),
+                                  child: const Text('Ya'),
                             onPressed: (){
                               Get.back();
                               Get.back();
@@ -681,7 +685,7 @@ _showTask(){
               color:Get.isDarkMode?Colors.grey[600]:Colors.grey[300]
               ),
             ),
-            Spacer(),
+          const Spacer(),
           task.isCompleted==1
           ?Container()
             : _buttonSheetButton(
@@ -892,7 +896,15 @@ required String label,
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text('Total Ternak',style: headingStyle.copyWith(fontSize: 13 ),),
-                                    Container(child: Obx(() => Text('${count (totall+totalPejantan+totalPengemukan+totalAnakan,)}', style: subHeadingStyle,))),
+                                  Obx(() => Text(
+                                        '${count(
+                                          totall +
+                                              totalPejantan +
+                                              totalPengemukan +
+                                              totalAnakan,
+                                        )}',
+                                        style: subHeadingStyle,
+                                      )),
                                   ],
                                 )),
                             ],
@@ -922,7 +934,7 @@ required String label,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Container(
+                    SizedBox(
                              height: MediaQuery.of(context).size.height/20,
                              width: MediaQuery.of(context).size.width/1,
                               child: Row(
@@ -996,7 +1008,7 @@ required String label,
                                   ),
                                   SizedBox(width:MediaQuery.of(context).size.width/12,),
                                   Expanded(child: 
-                                  Container(
+                                  SizedBox(
                                     width: MediaQuery.of(context).size.width/1,
                                     child: Text(
                                       '$totalPengemukan',
@@ -1064,14 +1076,17 @@ required String label,
     snackPosition:  SnackPosition.TOP,
     backgroundColor: Colors.white,
       boxShadows: [
-                  BoxShadow(
+        const BoxShadow(
                     color: primaryClr,
                     spreadRadius: 0,
                     blurRadius: 1.5,
                     offset: Offset(0, 0),
                   )
                 ],
-    icon: Icon(Icons.beenhere_outlined,color: primaryClr,) ,
+      icon: const Icon(
+        Icons.beenhere_outlined,
+        color: primaryClr,
+      ),
     colorText: primaryClr,
     );  
   }
@@ -1080,14 +1095,17 @@ _validateButtonDelete(){
     snackPosition:  SnackPosition.values.first,
     backgroundColor: Colors.white,
       boxShadows: [
-                  BoxShadow(
+        const BoxShadow(
                     color: primaryClr,
                     spreadRadius: 0,
                     blurRadius: 1.5,
                     offset: Offset(0, 0),
                   )
                 ],
-    icon: Icon(Icons.beenhere_outlined,color: primaryClr,) ,
+      icon: const Icon(
+        Icons.beenhere_outlined,
+        color: primaryClr,
+      ),
     colorText: primaryClr,
     );  
   
