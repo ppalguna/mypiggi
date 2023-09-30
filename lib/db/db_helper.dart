@@ -1,5 +1,6 @@
 
 import 'dart:io';
+
 import 'package:get/get.dart';
 import 'package:my_piggy_app/models/pakan.dart';
 import 'package:my_piggy_app/models/profil.dart';
@@ -112,7 +113,7 @@ class DBHelper{
   WHERE id = ?
 ''',[1,id]);
   }
-  static Future<int>UpdateTask(int idTask,Map<String,dynamic>row)async{
+  static Future<int> updateTask(int idTask, Map<String, dynamic> row) async {
     final querytask = await _db!.update(_tableName, row, where: 'id=?', whereArgs: [idTask]);
     return querytask;
   }

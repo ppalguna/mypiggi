@@ -64,12 +64,12 @@ dependencies:
   permission_handler: ^10.4.3
   # file_picker: ^5.3.4
   file_picker: ^5.3.1
-  # restart_app: ^1.2.1
-  restart_app: ^1.1.2
+  restart_app: ^1.2.1
+  # restart_app: ^1.1.2
   package_info_plus: ^4.1.0
   social_media_flutter: ^0.0.2
-  syncfusion_flutter_charts: ^22.2.11
-  syncfusion_flutter_datepicker: ^22.2.11
+  syncfusion_flutter_charts: 22.2.11
+  syncfusion_flutter_datepicker: 22.2.11
   timeline_tile: ^2.0.0
   flutter_multi_formatter: ^2.11.9
   currency_text_input_formatter: ^2.1.10

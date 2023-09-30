@@ -27,7 +27,7 @@ class _EditJadwalState extends State<EditJadwal> {
   String _endTime = "09.30 PM";
   String _startTime = DateFormat("hh:mm a").format(DateTime.now()).toString();
   String _selectedRepeat = "Kosong";
-  List<String> RepeatList = [
+  List<String> repeatList = [
     "Kosong",
     "Harian",
     "Mingguan",
@@ -152,7 +152,7 @@ class _EditJadwalState extends State<EditJadwal> {
                     });
                   },
                   items:
-                      RepeatList.map<DropdownMenuItem<String>>((String value) {
+                      repeatList.map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value,
@@ -276,7 +276,7 @@ class _EditJadwalState extends State<EditJadwal> {
   _validatetask() async {
     if (_titleController.text.isNotEmpty && _noteController.text.isNotEmpty) {
       //add to database
-      await DBHelper.UpdateTask(widget.taskModel!.id!, {
+      await DBHelper.updateTask(widget.taskModel!.id!, {
         "note": _noteController.text,
         'title': _titleController.text,
         'date': DateFormat.yMd().format(_selectedDate),

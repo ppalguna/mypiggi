@@ -10,6 +10,7 @@ class TimeLine extends StatelessWidget {
   final bool isFirst;
   final bool isLast;
   final bool isPast;
+  // ignore: prefer_typing_uninitialized_variables
   final event;
   const TimeLine({super.key, required this.isFirst, required this.isLast, required this.isPast, this.event});
 
