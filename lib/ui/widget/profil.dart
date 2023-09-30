@@ -44,13 +44,19 @@ class profilHeader extends StatelessWidget {
                         const Padding(
                           padding: EdgeInsets.only(left: 80),
                         ),
-                        Column(
-                          children: [
-                            Text(
-                                controller.profilList.first.namaPeternak ?? ""),
-                            Text(controller.profilList.first.namaPeternakan ??
-                                ""),
-                          ],
+                        Builder(builder: (context) {
+                          final profileData = controller.profilList;
+                          return Column(
+                            children: [
+                              Text(profileData.isEmpty
+                                  ? 'Nama Peternak'
+                                  : profileData.first.namaPeternak ?? ""),
+                              Text(profileData.isEmpty
+                                  ? 'Nama Peternakan'
+                                  : profileData.first.namaPeternakan ?? ""),
+                            ],
+                          );
+                        }
                         ),
                         IconButton(
                           onPressed: () {

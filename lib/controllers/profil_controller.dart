@@ -7,10 +7,6 @@ import '../models/profil.dart';
 class ProfilController extends GetxController {
   get text => null;
 
-  static ProfilController get to => Get.isRegistered<ProfilController>()
-      ? Get.find<ProfilController>()
-      : Get.put(ProfilController());
-
   var profilList = <Profil>[].obs;
 
   final TextEditingController namaPeternakController = TextEditingController();
@@ -31,6 +27,7 @@ class ProfilController extends GetxController {
   }
 
   void getProfil() async {
+
     List<Map<String, dynamic>> profil = await DBHelper.query3();
     profilList.assignAll(
         profil.map((dataprofil) => Profil.fromJson(dataprofil)).toList());
@@ -39,6 +36,8 @@ class ProfilController extends GetxController {
       namaPeternakController.text = profilList.first.namaPeternak ?? "";
       namaPeternakanController.text = profilList.first.namaPeternakan ?? "";
     }
+
+
   }
 
   void updateprofil(int id) async {

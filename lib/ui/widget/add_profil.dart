@@ -113,7 +113,9 @@ class _editProfilState extends State<editProfil> {
                             
                             MyBotton(label: "Simpan ", onTap: () {
                               _addProfilToDb();
-                              Get.snackbar("Sukses", "Input Jadwal Berhasil",
+                              Get.snackbar(
+                                "Sukses",
+                                "Input Profil Berhasil",
                               snackPosition:  SnackPosition.BOTTOM,
                               backgroundColor: primaryClr,
                               icon: const Icon(Icons.beenhere_outlined,color: Colors.white,) ,

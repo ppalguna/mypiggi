@@ -981,7 +981,7 @@ class _pigUpdateState extends State<pigUpdate> {
 
   var totalPejantan = 0;
   void p() async {
-    var totalP = (await _pigController.p)[0]['totalPejantan'];
+    var totalP = (await _pigController.pigDB)[0]['totalPejantan'];
     print(totalP);
     setState(() {
       totalPejantan = totalP;
