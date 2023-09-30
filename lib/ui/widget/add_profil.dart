@@ -31,22 +31,30 @@ class _editProfilState extends State<editProfil> {
    
   }
   final ProfilController _profilController = Get.put(ProfilController());
-   final TextEditingController _namaPeternakController = TextEditingController();
-   final TextEditingController _namaPeternakanController= TextEditingController();
+  //  final TextEditingController _namaPeternakController = TextEditingController();
+  //  final TextEditingController _namaPeternakanController= TextEditingController();
   DBHelper mydb = DBHelper();
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
         
         title: 
-        Text('Edit Profil', style: subStyle.copyWith(color:Get.isDarkMode?Colors.white:Colors.black,),),
+        Text(
+          'Edit Profil',
+          style: subStyle.copyWith(
+            color: Get.isDarkMode ? Colors.white : Colors.black,
+          ),
+        ),
         bottomOpacity: 0.0,
         elevation: 0.0,
         centerTitle: true,
         backgroundColor: context.theme.dialogBackgroundColor,
         leading: IconButton(
-          onPressed: ()=>Get.back(),
+          onPressed: () {
+            Get.back();
+          },
           icon: const Icon(Icons.arrow_back_ios),
           color: Get.isDarkMode?Colors.white:Colors.black,
           
@@ -85,8 +93,16 @@ class _editProfilState extends State<editProfil> {
                child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                   MyInputField(title:"Nama Peternak", hint: "Masukan nama anda", controller: _namaPeternakController,),
-                   MyInputField(title:"Nama Peternakan", hint: "Masukan nama peternakan ", controller: _namaPeternakanController,),
+                  MyInputField(
+                    title: "Nama Peternak",
+                    hint: "Masukan nama anda",
+                    controller: _profilController.namaPeternakController,
+                  ),
+                  MyInputField(
+                    title: "Nama Peternakan",
+                    hint: "Masukan nama peternakan ",
+                    controller: _profilController.namaPeternakanController,
+                  ),
              
                    SizedBox(
                        width: MediaQuery.of(context).size.width/0.2,
@@ -131,13 +147,18 @@ class _editProfilState extends State<editProfil> {
  int value = await _profilController.addProfil(
   profil : Profil(
     id: 1,
-     namaPeternak : _namaPeternakController.text,
-     namaPeternakan: _namaPeternakanController.text,
+        //  namaPeternak : _namaPeternakController.text,
+        //  namaPeternakan: _namaPeternakanController.text,
+        namaPeternak: _profilController.namaPeternakController.text,
+        namaPeternakan: _profilController.namaPeternakanController.text,
      foto: _image.toString(),
     ),
   );
+
+  
   
   print("my id profil is"+" $value");
+    _profilController.update(['header/profile']);
   _profilController.getProfil();
   
 }
