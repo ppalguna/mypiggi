@@ -123,7 +123,7 @@ final  _jumlahPakanController= TextEditingController();
           ),
           
           body: SingleChildScrollView(
-            child: Container(
+            child: SizedBox(
             width: MediaQuery.of(context).size.width,
             child: 
             Container( 
@@ -135,196 +135,196 @@ final  _jumlahPakanController= TextEditingController();
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 
-                Container(
-                  padding: const EdgeInsets.fromLTRB(21, 23, 24, 21),
-                  width: MediaQuery.of(context).size.width,
-                  child: 
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                // Container(
+                //   padding: const EdgeInsets.fromLTRB(21, 23, 24, 21),
+                //   width: MediaQuery.of(context).size.width,
+                //   child: 
+                //   const Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
                      
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(18, 25, 22, 25),
-                         width: MediaQuery.of(context).size.width,
+                      // Container(
+                      //   padding: const EdgeInsets.fromLTRB(18, 25, 22, 25),
+                      //    width: MediaQuery.of(context).size.width,
           
-                        decoration:  BoxDecoration(
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Color.fromARGB(255, 100, 100, 100),
-                              spreadRadius: 0,
-                              blurRadius: 1,
-                              offset: Offset(0, 1)
-                            )
-                          ],
-                          color: Get.isDarkMode?Colors.grey[400]:Colors.white,
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(30),
-                            topRight: Radius.circular(30),
+                      //   decoration:  BoxDecoration(
+                      //     boxShadow: const [
+                      //       BoxShadow(
+                      //         color: Color.fromARGB(255, 100, 100, 100),
+                      //         spreadRadius: 0,
+                      //         blurRadius: 1,
+                      //         offset: Offset(0, 1)
+                      //       )
+                      //     ],
+                      //     color: Get.isDarkMode?Colors.grey[400]:Colors.white,
+                      //     borderRadius: const BorderRadius.only(
+                      //       topLeft: Radius.circular(30),
+                      //       topRight: Radius.circular(30),
                             
-                          )
-                        ),
+                      //     )
+                      //   ),
                       
-                        child: 
-                        Row(
-                          crossAxisAlignment:CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                            width: MediaQuery.of(context).size.width/2,
-                              child: 
-                              Text(
-                                "Total Babi",
-                                style: subHeadingStyle.copyWith(color: const Color.fromARGB(255, 110, 110, 110)),
-                              ),
-                            ),
-                            SizedBox(width: MediaQuery.of(context).size.width/19,),
-                            SizedBox(
-                             width: MediaQuery.of(context).size.width/8,
-                             child: Obx(() => Text('${count (totall+totalPejantan+totalPengemukan+totalAnakan)}')),
-                              // child: Text(
-                              //   "120",
-                              //   style: subHeadingStyle.copyWith(color: const Color.fromARGB(255, 110, 110, 110)),
-                              // ),
+                        // child: 
+                        // Row(
+                        //   crossAxisAlignment:CrossAxisAlignment.center,
+                          // children: [
+                          //   Container(
+                          //   width: MediaQuery.of(context).size.width/2,
+                          //     child: 
+                          //     Text(
+                          //       "Total Babi",
+                          //       style: subHeadingStyle.copyWith(color: const Color.fromARGB(255, 110, 110, 110)),
+                          //     ),
+                          //   ),
+                          //   SizedBox(width: MediaQuery.of(context).size.width/19,),
+                          //   SizedBox(
+                          //    width: MediaQuery.of(context).size.width/8,
+                          //    child: Obx(() => Text('${count (totall+totalPejantan+totalPengemukan+totalAnakan)}')),
+                          //     // child: Text(
+                          //     //   "120",
+                          //     //   style: subHeadingStyle.copyWith(color: const Color.fromARGB(255, 110, 110, 110)),
+                          //     // ),
             
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width/13,
-                              child: Text(
-                                "ekor",
-                                style: subHeadingStyle.copyWith(color: const Color.fromARGB(255, 110, 110, 110),fontSize: 12, height: 0),
-                              ),
+                          //   ),
+                          //   SizedBox(
+                          //     width: MediaQuery.of(context).size.width/13,
+                          //     child: Text(
+                          //       "ekor",
+                          //       style: subHeadingStyle.copyWith(color: const Color.fromARGB(255, 110, 110, 110),fontSize: 12, height: 0),
+                          //     ),
             
-                            )
+                          //   )
           
           
-                          ],
-                        ),
-                      ),
+                          // ],
+                       // ),
+                      //),
                      
-                      Container(
-                      height: MediaQuery.of(context).size.height/8,
-                       width: MediaQuery.of(context).size.width,
-                        decoration: const BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Color.fromARGB(255, 100, 100, 100),
-                              spreadRadius: 0,
-                              blurRadius: 1,
-                              offset: Offset(0, 1)
-                            )
-                          ],
-                          color: primaryClr,
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(30),
-                            bottomRight: Radius.circular(30)
-                          )
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                             height: MediaQuery.of(context).size.height/20,
-                             width: MediaQuery.of(context).size.width/1,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SizedBox(width: MediaQuery.of(context).size.width/33,),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width/5,
-                                    child: Text(
-                                      "Indukan",
-                                      style: subStyle.copyWith(color: Colors.white, fontSize: 12),
-                                    ),
-                                  ),
-                                   SizedBox(
-                                    width: MediaQuery.of(context).size.width/5.2,
-                                    child: Text(
-                                      "Anakan",
-                                      style: subStyle.copyWith(color: Colors.white, fontSize: 12),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                     width: MediaQuery.of(context).size.width/3.5,
-                                    child: Text(
-                                      "Penggemukan",
-                                      style: subStyle.copyWith(color: Colors.white, fontSize: 12),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width/7,
-                                    child: Text(
-                                      "Pejantan",
-                                      style: subStyle.copyWith(color: Colors.white, fontSize: 12),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 1,
-                              color: Colors.white,
+                      // Container(
+                      // height: MediaQuery.of(context).size.height/8,
+                      //  width: MediaQuery.of(context).size.width,
+                      //   decoration: const BoxDecoration(
+                      //     boxShadow: [
+                      //       BoxShadow(
+                      //         color: Color.fromARGB(255, 100, 100, 100),
+                      //         spreadRadius: 0,
+                      //         blurRadius: 1,
+                      //         offset: Offset(0, 1)
+                      //       )
+                      //     ],
+                      //     color: primaryClr,
+                      //     borderRadius: BorderRadius.only(
+                      //       bottomLeft: Radius.circular(30),
+                      //       bottomRight: Radius.circular(30)
+                      //     )
+                      //   ),
+                        // child: Column(
+                        //   crossAxisAlignment: CrossAxisAlignment.center,
+                        //   children: [
+                        //     Container(
+                        //      height: MediaQuery.of(context).size.height/20,
+                        //      width: MediaQuery.of(context).size.width/1,
+                        //       child: Row(
+                        //         crossAxisAlignment: CrossAxisAlignment.center,
+                        //         children: [
+                        //           SizedBox(width: MediaQuery.of(context).size.width/33,),
+                        //           SizedBox(
+                        //             width: MediaQuery.of(context).size.width/5,
+                        //             child: Text(
+                        //               "Indukan",
+                        //               style: subStyle.copyWith(color: Colors.white, fontSize: 12),
+                        //             ),
+                        //           ),
+                        //            SizedBox(
+                        //             width: MediaQuery.of(context).size.width/5.2,
+                        //             child: Text(
+                        //               "Anakan",
+                        //               style: subStyle.copyWith(color: Colors.white, fontSize: 12),
+                        //             ),
+                        //           ),
+                        //           SizedBox(
+                        //              width: MediaQuery.of(context).size.width/3.5,
+                        //             child: Text(
+                        //               "Penggemukan",
+                        //               style: subStyle.copyWith(color: Colors.white, fontSize: 12),
+                        //             ),
+                        //           ),
+                        //           SizedBox(
+                        //             width: MediaQuery.of(context).size.width/7,
+                        //             child: Text(
+                        //               "Pejantan",
+                        //               style: subStyle.copyWith(color: Colors.white, fontSize: 12),
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //     Container(
+                        //       width: MediaQuery.of(context).size.width,
+                        //       height: 1,
+                        //       color: Colors.white,
           
-                            ),
-                            SizedBox(height:MediaQuery.of(context).size.height/60,),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height/38,
-                              width: MediaQuery.of(context).size.width/1,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                        //     ),
+                        //     SizedBox(height:MediaQuery.of(context).size.height/60,),
+                        //     SizedBox(
+                        //       height: MediaQuery.of(context).size.height/38,
+                        //       width: MediaQuery.of(context).size.width/1,
+                        //       child: Row(
+                        //         crossAxisAlignment: CrossAxisAlignment.center,
                                 
-                                children: [
-                                  SizedBox(width:MediaQuery.of(context).size.width/22,),
-                                  Expanded(child: 
-                                  Text(
-                                    '$totall',
-                                    style: subStyle.copyWith(color:Colors.white, fontSize: 17),
+                        //         children: [
+                        //           SizedBox(width:MediaQuery.of(context).size.width/22,),
+                        //           Expanded(child: 
+                        //           Text(
+                        //             '$totall',
+                        //             style: subStyle.copyWith(color:Colors.white, fontSize: 17),
           
-                                  ),
-                                  ),
-                                    SizedBox(width:MediaQuery.of(context).size.width/20,),
+                        //           ),
+                        //           ),
+                        //             SizedBox(width:MediaQuery.of(context).size.width/20,),
                                  
-                                  Expanded(child: 
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width/1,
-                                    child: Text(
-                                      '$totalAnakan',
-                                      style: subStyle.copyWith(color:Colors.white, fontSize: 17),
+                        //           Expanded(child: 
+                        //           SizedBox(
+                        //             width: MediaQuery.of(context).size.width/1,
+                        //             child: Text(
+                        //               '$totalAnakan',
+                        //               style: subStyle.copyWith(color:Colors.white, fontSize: 17),
           
-                                    ),
-                                  ),
-                                  ),
-                                  SizedBox(width:MediaQuery.of(context).size.width/12,),
-                                  Expanded(child: 
-                                  Container(
-                                    width: MediaQuery.of(context).size.width/1,
-                                    child: Text(
-                                      '$totalPengemukan',
-                                      style: subStyle.copyWith(color:Colors.white, fontSize: 17),
+                        //             ),
+                        //           ),
+                        //           ),
+                        //           SizedBox(width:MediaQuery.of(context).size.width/12,),
+                        //           Expanded(child: 
+                        //           Container(
+                        //             width: MediaQuery.of(context).size.width/1,
+                        //             child: Text(
+                        //               '$totalPengemukan',
+                        //               style: subStyle.copyWith(color:Colors.white, fontSize: 17),
           
-                                    ),
-                                  ),
-                                  ),
-                                    SizedBox(width:MediaQuery.of(context).size.width/10,),
-                                  Expanded(child: 
-                                  Text(
-                                    '$totalPejantan',
-                                    style: subStyle.copyWith(color:Colors.white, fontSize: 17),
+                        //             ),
+                        //           ),
+                        //           ),
+                        //             SizedBox(width:MediaQuery.of(context).size.width/10,),
+                        //           Expanded(child: 
+                        //           Text(
+                        //             '$totalPejantan',
+                        //             style: subStyle.copyWith(color:Colors.white, fontSize: 17),
           
-                                  ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
+                        //           ),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     )
+                        //   ],
+                        // ),
+                      // ),
                       
-                    ],
-                  ),
-                ),
+                //     ],
+                //   ),
+                // ),
                 SizedBox(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height/17,
+                height: MediaQuery.of(context).size.height/15,
                   child: Stack(
                     children: [
                       Positioned(
@@ -403,8 +403,9 @@ final  _jumlahPakanController= TextEditingController();
   
   _formTernak(){
     return Container(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 25),
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 25),
               width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height/1.2,
               color: primaryClr, child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -462,7 +463,7 @@ final  _jumlahPakanController= TextEditingController();
                             ).toList(),
                           ),
                         ),
-                        MyInputField2(title:"Catatan", hint: "Masukan catatan anda", controller: _catatanPig ,),
+                        MyInputField2(title:"Catatan (Optional)", hint: "Masukan catatan anda", controller: _catatanPig ,),
                       ],
                     ),
                   ),
@@ -516,42 +517,14 @@ final  _jumlahPakanController= TextEditingController();
                    ),
                     Container(
                         width: MediaQuery.of(context).size.width/1,
-                        height: MediaQuery.of(context).size.height/6.3,
+                        height: MediaQuery.of(context).size.height/6,
                         color: primaryClr,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                            
                               MyBotton(label: "Simpan ", onTap: () {
-                                _addPigToDb();
-                              _progress = 0;
-                              _timer?.cancel();
-                              _timer = Timer.periodic(const Duration(milliseconds: 25),
-                              (Timer timer) {
-                                EasyLoading.instance
-                                ..displayDuration =const Duration(milliseconds: 1000)
-                                ..loadingStyle =EasyLoadingStyle.custom //This was missing in earlier code
-                                ..backgroundColor = primaryClr
-                                ..progressColor = Colors.white
-                                ..indicatorColor = Colors.white
-                                ..progressColor = Colors.white
-                                ..maskColor = Colors.white
-                                ..textColor= Colors.white
-                                ..dismissOnTap = true;
-                                EasyLoading.showProgress(_progress,
-                                status: '${(_progress * 100).toStringAsFixed(0)}%');
-                                _progress += 0.03;
-                                
-                                if (_progress >= 1) {
-                                  _timer?.cancel();
-                                  _pigController.dbpenggemukan;
-                                  EasyLoading.dismiss();
-                                 
-                                  _validateDate();
-                                      
-                                }
-                              });
-                               
+                              _validateDate();
                             })  
                           ],
                         ),
@@ -565,7 +538,9 @@ _formPakan(){
 return Container(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 25),
               width: MediaQuery.of(context).size.width,
-              color: primaryClr, child: Column(
+              height: MediaQuery.of(context).size.height/1.2,
+              color: primaryClr, 
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
@@ -709,7 +684,7 @@ return Container(
                         )
                       ],
                     ),
-                   MyInputField2(title:"Catatan", hint: "Masukan catatan anda", controller: _catatanPakan ,),
+                   MyInputField2(title:"Catatan (Optional)", hint: "Masukan catatan anda", controller: _catatanPakan ,),
                     Container(
                         width: MediaQuery.of(context).size.width/1,
                         height: MediaQuery.of(context).size.height/6.3,
@@ -719,31 +694,7 @@ return Container(
                           children: [
                            
                               MyBotton(label: "Simpan ", onTap: () {
-                              _progress = 0;
-                              _timer?.cancel();
-                              _timer = Timer.periodic(const Duration(milliseconds: 25),
-                              (Timer timer) {
-                                EasyLoading.instance
-                                ..displayDuration =const Duration(milliseconds: 1000)
-                                ..loadingStyle =EasyLoadingStyle.custom //This was missing in earlier code
-                                ..backgroundColor = primaryClr
-                                ..progressColor = Colors.white
-                                ..indicatorColor = Colors.white
-                                ..progressColor = Colors.white
-                                ..maskColor = Colors.white
-                                ..textColor= Colors.white
-                                ..dismissOnTap = true;
-                                EasyLoading.showProgress(_progress,
-                                status: '${(_progress * 100).toStringAsFixed(0)}%');
-                                _progress += 0.03;
-                                
-                                if (_progress >= 1) {
-                                  _timer?.cancel();
-                                  EasyLoading.dismiss();
-                                  _addPakanToDb();
-                                  _validateDate();
-                                }
-                              });
+                              _validatePakan();
                               })  
                           ],
                         ),
@@ -783,13 +734,37 @@ return Container(
 }
 
 _validateDate(){
-  if(_jenisTernak.isNotEmpty&&_tipeUpdate.isNotEmpty){
+  if(_jenisTernak.isNotEmpty&&_tipeUpdate.isNotEmpty&&_jumlahController.text.isNotEmpty){
     //add to database
-    Get.snackbar("Sukses", "Input Jadwal Berhasil",
+_addPigToDb();
+ _progress = 0;
+_timer?.cancel();
+_timer = Timer.periodic(const Duration(milliseconds: 25),
+(Timer timer) {
+EasyLoading.instance
+..displayDuration =const Duration(milliseconds: 1000)
+..loadingStyle =EasyLoadingStyle.custom //This was missing in earlier code
+..backgroundColor = primaryClr
+ ..progressColor = Colors.white
+ ..indicatorColor = Colors.white
+..progressColor = Colors.white
+ ..maskColor = Colors.white
+..textColor= Colors.white
+ ..dismissOnTap = true;
+ EasyLoading.showProgress(_progress,
+ status: '${(_progress * 100).toStringAsFixed(0)}%');
+ _progress += 0.03;
+                                
+ if (_progress >= 1) {
+_timer?.cancel();
+_pigController.dbpenggemukan;
+EasyLoading.dismiss();  
+Get.back();
+Get.snackbar("Sukses", "Input Ternak Berhasil",
     snackPosition:  SnackPosition.TOP,
     backgroundColor: Colors.white,
       boxShadows: [
-                  BoxShadow(
+                  const BoxShadow(
                     color: primaryClr,
                     spreadRadius: 0,
                     blurRadius: 1.5,
@@ -798,14 +773,86 @@ _validateDate(){
                 ],
     icon: Icon(Icons.beenhere_outlined,color: primaryClr,) ,
     colorText: primaryClr,
-    );  
+    );    
+                                }
+                              });
+                               setState(() {
+                                    
+                                  });
+   
     
-  }else if(_jenisTernak.isNotEmpty||_tipeUpdate.isEmpty){
+  }else {
     Get.snackbar("Required", "Lengkapi semua",
-    snackPosition:  SnackPosition.BOTTOM,
+    snackPosition:  SnackPosition.TOP,
      backgroundColor: Colors.red,
       boxShadows: [
-                  BoxShadow(
+                  const BoxShadow(
+                    color: Colors.red,
+                    spreadRadius: 0,
+                    blurRadius: 1.5,
+                    offset: Offset(0, 0),
+                  )
+                ],
+    icon: Icon(Icons.warning_amber_outlined,color: Colors.white,) ,
+    colorText: Colors.white,
+    );  
+  }
+  
+}
+_validatePakan(){
+  if(_hargaPakan.text.isNotEmpty&&_jumlahPakanController.text.isNotEmpty){
+    //add to database
+_addPakanToDb();
+ _progress = 0;
+_timer?.cancel();
+_timer = Timer.periodic(const Duration(milliseconds: 25),
+(Timer timer) {
+EasyLoading.instance
+..displayDuration =const Duration(milliseconds: 1000)
+..loadingStyle =EasyLoadingStyle.custom //This was missing in earlier code
+..backgroundColor = primaryClr
+ ..progressColor = Colors.white
+ ..indicatorColor = Colors.white
+..progressColor = Colors.white
+ ..maskColor = Colors.white
+..textColor= Colors.white
+ ..dismissOnTap = true;
+ EasyLoading.showProgress(_progress,
+ status: '${(_progress * 100).toStringAsFixed(0)}%');
+ _progress += 0.03;
+                                
+ if (_progress >= 1) {
+_timer?.cancel();
+_pigController.dbpenggemukan;
+EasyLoading.dismiss();  
+Get.back();
+Get.snackbar("Sukses", "Input Pakan Berhasil",
+    snackPosition:  SnackPosition.TOP,
+    backgroundColor: Colors.white,
+      boxShadows: [
+                  const BoxShadow(
+                    color: primaryClr,
+                    spreadRadius: 0,
+                    blurRadius: 1.5,
+                    offset: Offset(0, 0),
+                  )
+                ],
+    icon: Icon(Icons.beenhere_outlined,color: primaryClr,) ,
+    colorText: primaryClr,
+    );    
+                                }
+                              });
+                               setState(() {
+                                    
+                                  });
+   
+    
+  }else {
+    Get.snackbar("Required", "Lengkapi semua",
+    snackPosition:  SnackPosition.TOP,
+     backgroundColor: Colors.red,
+      boxShadows: [
+                  const BoxShadow(
                     color: Colors.red,
                     spreadRadius: 0,
                     blurRadius: 1.5,

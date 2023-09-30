@@ -123,7 +123,7 @@ class DBHelper{
     return await _db!.query(_tableProfil);
   }
   static Future<int> insertprofil(Profil? profil)async{
-    
+    _db!.execute('delete from $_tableProfil');
     print("insert profil funtion called ");
     int count=await _db?.insert(_tableProfil, profil!.toJson())??3;
     return count;

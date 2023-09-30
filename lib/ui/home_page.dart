@@ -1,6 +1,7 @@
 
 import 'dart:core';
 import 'dart:io';
+import 'package:my_piggy_app/models/profil.dart';
 import 'package:my_piggy_app/ui/widget/profil.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
@@ -37,6 +38,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   // ignore: unused_field
+  Profil?profil;
   DateTime _selectedDate = DateTime.now();
   NotifyHelper notifH = NotifyHelper();
   final _taskController =Get.put(TaskController());
@@ -98,7 +100,7 @@ class _HomePageState extends State<HomePage> {
         child: SingleChildScrollView(
           child: Column(
              children: [
-             profilHeader(),
+             profilHeader(profilModel: profil,),
               ListTile(
                 leading: const Icon(Icons.health_and_safety),
                 title: const Text("Kesehatan Babi"),
@@ -321,9 +323,11 @@ class _HomePageState extends State<HomePage> {
   if(_noteController.noteList.isEmpty){
       return Center(
         child: Column(
+           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment:CrossAxisAlignment.center,
           children: [
             Container(
-              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height/10),
+              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height/15),
               width: MediaQuery.of(context).size.width/4,
               child: Image.asset('images/empy.png')
               ),
@@ -435,9 +439,11 @@ _showTask(){
    if(_taskController.taskList.isEmpty){
       return Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment:CrossAxisAlignment.center,
           children: [
             Container(
-              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height/10),
+              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height/15),
               width: MediaQuery.of(context).size.width/4,
               child: Image.asset('images/empy.png')
               ),

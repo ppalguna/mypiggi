@@ -44,6 +44,7 @@ class MyInputField extends StatelessWidget {
                   child: TextFormField(
                     readOnly: widget==null?false:true, //mengecek apakah kalau ada WIdget, jika nuul maka nilainya false dan bisa di ketikan jika not null maka akan di read saja tidak bisa di ketik
                     autofocus: false,
+                    
                     cursorColor: Get.isDarkMode?Colors.grey[100]:Colors.grey,
                     controller: controller,
                     style: subTitleStyle,

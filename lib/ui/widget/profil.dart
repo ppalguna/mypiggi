@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_piggy_app/controllers/profil_controller.dart';
 import 'package:my_piggy_app/models/profil.dart';
 import 'package:my_piggy_app/ui/theme.dart';
-import 'package:my_piggy_app/ui/widget/updateProfil.dart';
+
+import 'add_profil.dart';
 
 
 class profilHeader extends StatelessWidget {
-  final Profil?profil;
-  const profilHeader({super.key, this.profil});
+  final Profil?profilModel;
+  const profilHeader({super.key, this.profilModel});
 
   @override
   Widget build(BuildContext context) {
-    ProfilController _profilController =ProfilController();
+
     return  Container(
      
       width:  double.infinity,
@@ -40,9 +40,15 @@ class profilHeader extends StatelessWidget {
             const Padding(
              padding:  EdgeInsets.only(left: 80),
            ),
+           Column(
+             children: [
+               Text("${profilModel?.namaPeternak}"),
+               Text("${profilModel?.namaPeternakan}"),
+             ],
+           ),
             IconButton(
                  onPressed: (){
-                     Get.to(()=>updateProfil(profilModel: profil,));         
+                     Get.to(()=>const editProfil());       
                   },
                  icon: const Icon(
                  Icons.edit_square,
@@ -57,4 +63,5 @@ class profilHeader extends StatelessWidget {
     
     );
   }
+  
 }
