@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,17 +10,17 @@ import 'edit_jadwal.dart';
 
 class TaskTile extends StatelessWidget {
   final Task? task;
-  TaskTile(this.task);
+  const TaskTile(this.task, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding:
-      EdgeInsets.symmetric(horizontal: 20),
+      const EdgeInsets.symmetric(horizontal: 20),
       width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 12),
       child: Container(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         //  width: SizeConfig.screenWidth * 0.78,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
@@ -35,7 +34,7 @@ class TaskTile extends StatelessWidget {
                 Container(
                   width: MediaQuery.of(context).size.width/2.5,
                   //height: MediaQuery.of(context).size.height/33,
-                  decoration:BoxDecoration(
+                  decoration: const BoxDecoration(
                      color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(5))
                   ),
@@ -115,7 +114,7 @@ class TaskTile extends StatelessWidget {
            ),
            
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 10),
+            margin: const EdgeInsets.symmetric(horizontal: 10),
             height: 60,
             width: 0.5,
             color: Colors.grey[200]!.withOpacity(0.7),

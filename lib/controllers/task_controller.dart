@@ -6,10 +6,6 @@ import '../models/task.dart';
 
 class TaskController extends GetxController{
 
-  @override
-  void onReady(){
-    super.onReady();
-  }
   var taskList = <Task>[].obs;
 
  Future< int > addTask({Future? showDialog, Task? task}) async{ 

@@ -24,7 +24,7 @@ class Pakan{
     }  
 
   Map<String,dynamic> toJson(){
-    final Map<String, dynamic>datapakan = new Map<String, dynamic>();
+    final Map<String, dynamic> datapakan = <String, dynamic>{};
       datapakan['id']= id;
       datapakan['tanggalPakan']=tanggalPakan;
       datapakan['jumlahPakan']= jumlahPakan;

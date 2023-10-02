@@ -1,9 +1,7 @@
 
 import 'dart:core';
 import 'dart:io';
-import 'package:my_piggy_app/models/profil.dart';
-import 'package:my_piggy_app/ui/widget/profil.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -13,6 +11,7 @@ import 'package:intl/intl.dart';
 import 'package:my_piggy_app/controllers/note_controller.dart';
 import 'package:my_piggy_app/controllers/pig_controller.dart';
 import 'package:my_piggy_app/controllers/task_controller.dart';
+import 'package:my_piggy_app/models/profil.dart';
 import 'package:my_piggy_app/models/task.dart';
 import 'package:my_piggy_app/services/Notification_services.dart';
 import 'package:my_piggy_app/services/theme_services.dart';
@@ -23,7 +22,10 @@ import 'package:my_piggy_app/ui/widget/add_note.dart';
 import 'package:my_piggy_app/ui/widget/backup_restoredb.dart';
 import 'package:my_piggy_app/ui/widget/note_Tile.dart';
 import 'package:my_piggy_app/ui/widget/pigHealth.dart';
+import 'package:my_piggy_app/ui/widget/profil.dart';
 import 'package:my_piggy_app/ui/widget/task_tile.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+
 import '../models/note.dart';
 import '../services/permissionNotif.dart';
 import 'widget/dataDiagram.dart';
@@ -43,7 +45,7 @@ class _HomePageState extends State<HomePage> {
   NotifyHelper notifH = NotifyHelper();
   final _taskController =Get.put(TaskController());
   final _noteController =Get.put(NoteController());
-  final _pigController = Get.put(PigController());
+  // final _pigController = Get.put(PigController());
   var count = 0.obs;
   var notifyHelper;
   String? _packageInfoText;
@@ -84,10 +86,10 @@ class _HomePageState extends State<HomePage> {
     notifyHelper=NotifyHelper();
     notifyHelper.initializeNotification();
     _getInfoPressed();
-    calculate();
-    calculateAnakan();
-    calculatePenggemukan();
-    p();
+    // calculate();
+    // calculateAnakan();
+    // calculatePenggemukan();
+    // p();
     
   }
   @override
@@ -96,71 +98,12 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       
       backgroundColor: context.theme.dialogBackgroundColor,
-      endDrawer: Drawer(
-        child: SingleChildScrollView(
-          child: Column(
-             children: [
-             profilHeader(profilModel: profil,),
-              ListTile(
-                leading: const Icon(Icons.health_and_safety),
-                title: const Text("Kesehatan Babi"),
-                onTap: () async {
-                 await  Get.to(()=>const pigHealth());
-               },
-              ),
-              ListTile(
-                leading: const Icon(Icons.data_exploration_rounded),
-                title: const Text("Diagram Rekap"),
-                onTap: () async {
-                  
-                 await  Get.to(()=> dataDiagram());
-               },
-              ),
-               ListTile(
-                leading: const Icon(Icons.person_pin_circle_outlined),
-                title: const Text("Tentang Pengembang"),
-                onTap: () async {
-                 await  Get.to(()=>const About());
-               },
-              ),
-             
-              ListTile(
-                leading: const Icon(Icons.backup_table_sharp),
-                title: const Text("Backup dan Restore"),
-                onTap: () async {
-                 await  Get.to(()=>backupRestoreData(title: "",));
-               },
-              ),
-              ListTile(
-                leading: const Icon(Icons.logout),
-                title: const Text("Keluar"),
-               onTap: () {
-                exit(0);
-               },
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height/3,),
-              
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                 
-                _packageInfoText!=null?  SizedBox(height: MediaQuery.of(context).size.height/12,) : Container(),
-                _packageInfoText!=null? Text(_packageInfoText!, style: subtitle.copyWith(color: Colors.black) ):Container(),
-                 // Text('Versi Aplikasi 1.1.0',style: subtitle.copyWith(color: Colors.grey)),
-                ],
-              )
-             ],
-             
-          ),
-        ),
-        
-      ),
       appBar: _appBar(),
       body: Column(
         children:  [
         _addTaskBar(),
         _addDateBar(),
+          //TODO tab bar menu
          Container(
               margin: const EdgeInsets.only(top: 15),
                width: MediaQuery.of(context).size.width,
@@ -232,26 +175,24 @@ class _HomePageState extends State<HomePage> {
         ],
         
       ),
-      
+      endDrawer: _sidebarDrawer(context),
       floatingActionButton: FloatingActionButton(
-        
-        onPressed: ()async {
+        onPressed: () async {
+          //TODO update pig
           await Get.to(()=>const pigUpdate());
-          _pigController.getPig();        
+          // _pigController.getPig();      
+          PigController.to.getPig();  
           },
         elevation: 5,
         backgroundColor: Get.isDarkMode?primaryClr:Colors.white,
         child: Icon(Icons.edit_document,
         color: Get.isDarkMode?Colors.white:primaryClr,
         ),
-        
-        
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
-          shadowColor: primaryClr,
-          shape:    CircularNotchedRectangle(),
-          
+        shadowColor: primaryClr,
+        shape: const CircularNotchedRectangle(),
           height: MediaQuery.of(context).size.height/11,
           color:   Get.isDarkMode?primaryClr:Colors.white,
           notchMargin: 10,
@@ -264,7 +205,7 @@ class _HomePageState extends State<HomePage> {
                   MaterialButton(
                     minWidth: 40,
                     onPressed: () async {
-                    await  Get.to(()=>AddTaskPage());
+                    await Get.to(() => const AddTaskPage());
                    const notif();
                     _taskController.getTask();
                     },
@@ -284,8 +225,7 @@ class _HomePageState extends State<HomePage> {
                   )
                 ],
               ),
-              Row(
-                
+            Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   MaterialButton(
@@ -319,6 +259,76 @@ class _HomePageState extends State<HomePage> {
     );
     
   }
+
+  Drawer _sidebarDrawer(BuildContext context) {
+    return Drawer(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            profilHeader(
+              profilModel: profil,
+            ),
+            ListTile(
+              leading: const Icon(Icons.health_and_safety),
+              title: const Text("Kesehatan Babi"),
+              onTap: () async {
+                await Get.to(() => const pigHealth());
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.data_exploration_rounded),
+              title: const Text("Diagram Rekap"),
+              onTap: () async {
+                await Get.to(() => const dataDiagram());
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.person_pin_circle_outlined),
+              title: const Text("Tentang Pengembang"),
+              onTap: () async {
+                await Get.to(() => const About());
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.backup_table_sharp),
+              title: const Text("Backup dan Restore"),
+              onTap: () async {
+                await Get.to(() => const backupRestoreData(
+                      title: "",
+                    ));
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text("Keluar"),
+              onTap: () {
+                exit(0);
+              },
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height / 3,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                _packageInfoText != null
+                    ? SizedBox(
+                        height: MediaQuery.of(context).size.height / 12,
+                      )
+                    : Container(),
+                _packageInfoText != null
+                    ? Text(_packageInfoText!,
+                        style: subtitle.copyWith(color: Colors.black))
+                    : Container(),
+                // Text('Versi Aplikasi 1.1.0',style: subtitle.copyWith(color: Colors.grey)),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
  _showNote(){
   if(_noteController.noteList.isEmpty){
       return Center(
@@ -333,11 +343,11 @@ class _HomePageState extends State<HomePage> {
               ),
 
               Container(
-                padding: EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(top: 20),
                 child: Text('Catatan Ternak Kosong',style: subtitle.copyWith(color:Get.isDarkMode?Colors.white:Colors.grey,fontSize: 17, ),)),
               Container(
                 width: MediaQuery.of(context).size.width/1.3,
-                padding: EdgeInsets.only(top: 7),
+                padding: const EdgeInsets.only(top: 7),
                 child: Text('Ayo buat catatan ternak anda\nmulai sekarang.',style: subtitle.copyWith(color:Get.isDarkMode?Colors.white:Colors.grey,fontSize: 12, ),textAlign: TextAlign.center,)),
              ],
           
@@ -449,11 +459,11 @@ _showTask(){
               ),
 
               Container(
-                padding: EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(top: 20),
                 child: Text('Jadwal Ternak Kosong',style: subtitle.copyWith(color:Get.isDarkMode?Colors.white:Colors.grey,fontSize: 17, ),)),
               Container(
                 width: MediaQuery.of(context).size.width/1.3,
-                padding: EdgeInsets.only(top: 7),
+                padding: const EdgeInsets.only(top: 7),
                 child: Text('Ayo buat jadwal ternak anda\nmulai sekarang.',style: subtitle.copyWith(color:Get.isDarkMode?Colors.white:Colors.grey,fontSize: 12, ),textAlign: TextAlign.center,)),
              ],
           
@@ -586,7 +596,7 @@ _showTask(){
               color:Get.isDarkMode?Colors.grey[600]:Colors.grey[300]
               ),
             ),
-            Spacer(),
+          const Spacer(),
           note.isCompleted==1
           ?Container():
             // : _buttonSheetButton(
@@ -612,7 +622,7 @@ _showTask(){
                         Column(
                             children: [
                             TextButton(
-                            child: Text('Batal'),
+                                  child: const Text('Batal'),
                             onPressed: () => Get.back()
                           ),
                             ],
@@ -620,7 +630,7 @@ _showTask(){
                         Column(
                           children: [
                             TextButton(
-                            child: Text('Ya'),
+                                  child: const Text('Ya'),
                             onPressed: (){
                               Get.back();
                               Get.back();
@@ -681,7 +691,7 @@ _showTask(){
               color:Get.isDarkMode?Colors.grey[600]:Colors.grey[300]
               ),
             ),
-            Spacer(),
+          const Spacer(),
           task.isCompleted==1
           ?Container()
             : _buttonSheetButton(
@@ -845,12 +855,12 @@ required String label,
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+              _headerDataTernak(),
                      
                       Container(
-                        padding: const EdgeInsets.fromLTRB(15, 20, 0, 20),
-                         width: MediaQuery.of(context).size.width,
-          
-                        decoration:  const BoxDecoration(
+                height: MediaQuery.of(context).size.height / 8,
+                width: MediaQuery.of(context).size.width,
+                decoration: const BoxDecoration(
                           boxShadow: [
                             BoxShadow(
                               color: bgClr,
@@ -859,172 +869,208 @@ required String label,
                               offset: Offset(1.5, 0)
                             )
                           ],
-                          color: Colors.white,
+                    color: primaryClr,
                           borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30),
-                            topRight: Radius.circular(30),
-                            
+                        bottomLeft: Radius.circular(30),
+                        bottomRight: Radius.circular(30)
                           )
                         ),
-                      
-                        child: Row(
+                child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Hari ini",
-                              style: headingStyle,
-                              ),
-                              Text(DateFormat.yMMMd().format(DateTime.now()),
-                              style: subHeadingStyle,
-                              ),
-                             ],
-                            ),
-                             Column(
-                            children: [
-                              Container(
-                                width: MediaQuery.of(context).size.width/2.2,
-                                color: Colors.white,
-                               // margin: EdgeInsets.fromLTRB(0, 0, 30, 0),
-                                //height: MediaQuery.of(context).size.height/17,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text('Total Ternak',style: headingStyle.copyWith(fontSize: 13 ),),
-                                    Container(child: Obx(() => Text('${count (totall+totalPejantan+totalPengemukan+totalAnakan,)}', style: subHeadingStyle,))),
-                                  ],
-                                )),
-                            ],
-                          )
-                          ],
-                        )
-                      ),
-                     
-                      Container(
-                      height: MediaQuery.of(context).size.height/8,
-                       width: MediaQuery.of(context).size.width,
-                        decoration: const BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: bgClr,
-                              spreadRadius: 0,
-                              blurRadius: 2,
-                              offset: Offset(1.5, 0)
-                            )
-                          ],
-                          color: primaryClr,
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(30),
-                            bottomRight: Radius.circular(30)
-                          )
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                             height: MediaQuery.of(context).size.height/20,
-                             width: MediaQuery.of(context).size.width/1,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SizedBox(width: MediaQuery.of(context).size.width/33,),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width/5,
-                                    child: Text(
-                                      "Indukan",
-                                      style: subStyle.copyWith(color: Colors.white, fontSize: 12),
-                                    ),
-                                  ),
-                                   SizedBox(
-                                    width: MediaQuery.of(context).size.width/5.2,
-                                    child: Text(
-                                      "Anakan",
-                                      style: subStyle.copyWith(color: Colors.white, fontSize: 12),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                     width: MediaQuery.of(context).size.width/3.5,
-                                    child: Text(
-                                      "Penggemukan",
-                                      style: subStyle.copyWith(color: Colors.white, fontSize: 12),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width/7,
-                                    child: Text(
-                                      "Pejantan",
-                                      style: subStyle.copyWith(color: Colors.white, fontSize: 12),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 1,
-                              color: Colors.white,
-          
-                            ),
-                            SizedBox(height:MediaQuery.of(context).size.height/60,),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height/38,
-                              width: MediaQuery.of(context).size.width/1,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                
-                                children: [
-                                  SizedBox(width:MediaQuery.of(context).size.width/22,),
-                                  Expanded(child: 
-                                  Text(
-                                    '$totall',
-                                    style: subStyle.copyWith(color:Colors.white, fontSize: 17),
-          
-                                  ),
-                                  ),
-                                    SizedBox(width:MediaQuery.of(context).size.width/20,),
-                                 
-                                  Expanded(child: 
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width/1,
-                                    child: Text(
-                                      '$totalAnakan',
-                                      style: subStyle.copyWith(color:Colors.white, fontSize: 17),
-          
-                                    ),
-                                  ),
-                                  ),
-                                  SizedBox(width:MediaQuery.of(context).size.width/12,),
-                                  Expanded(child: 
-                                  Container(
-                                    width: MediaQuery.of(context).size.width/1,
-                                    child: Text(
-                                      '$totalPengemukan',
-                                      style: subStyle.copyWith(color:Colors.white, fontSize: 17),
-          
-                                    ),
-                                  ),
-                                  ),
-                                    SizedBox(width:MediaQuery.of(context).size.width/10,),
-                                  Expanded(child: 
-                                  Text(
-                                    '$totalPejantan',
-                                    style: subStyle.copyWith(color:Colors.white, fontSize: 17),
-          
-                                  ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
+                    _titleDataTernak(),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 1,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 60,
+                    ),
+                    _totalDataTernak()
+                  ],
+                ),
+              ),
                       
-                    ],
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  _totalDataTernak() {
+    return GetBuilder(
+      builder: (PigController pigController) {
+        return SizedBox(
+          height: MediaQuery.of(context).size.height / 38,
+          width: MediaQuery.of(context).size.width / 1,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 22,
+              ),
+              Expanded(
+                child: Text(
+                  // '$totall',
+                  pigController.totalIndukan.value.toString(),
+                  style: subStyle.copyWith(color: Colors.white, fontSize: 17),
+                ),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 20,
+              ),
+              Expanded(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width / 1,
+                  child: Text(
+                    // '$totalAnakan',
+                    pigController.totalAnakan.value.toString(),
+                    style: subStyle.copyWith(color: Colors.white, fontSize: 17),
                   ),
                 ),
-       ],
-     );
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 12,
+              ),
+              Expanded(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width / 1,
+                  child: Text(
+                    // '$totalPengemukan',
+                    pigController.totalPengemukan.value.toString(),
+                    style: subStyle.copyWith(color: Colors.white, fontSize: 17),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 10,
+              ),
+              Expanded(
+                child: Text(
+                  // '$totalPejantan',
+                  pigController.totalPejantan.value.toString(),
+                  style: subStyle.copyWith(color: Colors.white, fontSize: 17),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  SizedBox _titleDataTernak() {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height / 20,
+      width: MediaQuery.of(context).size.width / 1,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width / 33,
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width / 5,
+            child: Text(
+              "Indukan",
+              style: subStyle.copyWith(color: Colors.white, fontSize: 12),
+            ),
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width / 5.2,
+            child: Text(
+              "Anakan",
+              style: subStyle.copyWith(color: Colors.white, fontSize: 12),
+            ),
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width / 3.5,
+            child: Text(
+              "Penggemukan",
+              style: subStyle.copyWith(color: Colors.white, fontSize: 12),
+            ),
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width / 7,
+            child: Text(
+              "Pejantan",
+              style: subStyle.copyWith(color: Colors.white, fontSize: 12),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Container _headerDataTernak() {
+    return Container(
+        padding: const EdgeInsets.fromLTRB(15, 20, 0, 20),
+        width: MediaQuery.of(context).size.width,
+        decoration: const BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                  color: bgClr,
+                  spreadRadius: 0,
+                  blurRadius: 2,
+                  offset: Offset(1.5, 0))
+            ],
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30),
+              topRight: Radius.circular(30),
+            )),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Hari ini",
+                  style: headingStyle,
+                ),
+                Text(
+                  DateFormat.yMMMd().format(DateTime.now()),
+                  style: subHeadingStyle,
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                Container(
+                    width: MediaQuery.of(context).size.width / 2.2,
+                    color: Colors.white,
+                    // margin: EdgeInsets.fromLTRB(0, 0, 30, 0),
+                    //height: MediaQuery.of(context).size.height/17,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Total Ternak',
+                          style: headingStyle.copyWith(fontSize: 13),
+                        ),
+                        Obx(() => Text(
+                              // '${count(
+                              //   totall +
+                              //       totalPejantan +
+                              //       totalPengemukan +
+                              //       totalAnakan,
+                              // )}',
+                              // 'TODO total',
+                              // _pigController
+                              PigController.to
+                                  .calculateAllTotalTernak()
+                                  .toString(),
+                              style: subHeadingStyle,
+                            )),
+                      ],
+                    )),
+              ],
+            )
+          ],
+        ));
   }
   _appBar(){
     return AppBar(
@@ -1064,14 +1110,17 @@ required String label,
     snackPosition:  SnackPosition.TOP,
     backgroundColor: Colors.white,
       boxShadows: [
-                  BoxShadow(
+        const BoxShadow(
                     color: primaryClr,
                     spreadRadius: 0,
                     blurRadius: 1.5,
                     offset: Offset(0, 0),
                   )
                 ],
-    icon: Icon(Icons.beenhere_outlined,color: primaryClr,) ,
+      icon: const Icon(
+        Icons.beenhere_outlined,
+        color: primaryClr,
+      ),
     colorText: primaryClr,
     );  
   }
@@ -1080,14 +1129,17 @@ _validateButtonDelete(){
     snackPosition:  SnackPosition.values.first,
     backgroundColor: Colors.white,
       boxShadows: [
-                  BoxShadow(
+        const BoxShadow(
                     color: primaryClr,
                     spreadRadius: 0,
                     blurRadius: 1.5,
                     offset: Offset(0, 0),
                   )
                 ],
-    icon: Icon(Icons.beenhere_outlined,color: primaryClr,) ,
+      icon: const Icon(
+        Icons.beenhere_outlined,
+        color: primaryClr,
+      ),
     colorText: primaryClr,
     );  
   
@@ -1099,43 +1151,43 @@ _getInfoPressed() async {
       _packageInfoText = "Versi Aplikasi: $version\n";
     });
   }
-  int totall=0;
-  void calculate()async{
-  var total = (await _pigController.dbh)[0]['totalInduk'];
-  print(total);
-   print(total);
-  setState(() {
-    totall=total;
+  // int totall=0;
+  // void calculate()async{
+  // var total = (await _pigController.dbh)[0]['totalInduk'];
+  // print(total);
+  //  print(total);
+  // setState(() {
+  //   totall=total;
 
-  });
+  // });
   
-}
-  int totalAnakan=0;
-  void calculateAnakan()async{
-  var totalA = (await _pigController.dbanakan)[0]['totalAnak'];
-  print(totalA);
-  setState(() {
-    totalAnakan=totalA;
-  });
+// }
+//   int totalAnakan=0;
+//   void calculateAnakan()async{
+//   var totalA = (await _pigController.dbanakan)[0]['totalAnak'];
+//   print(totalA);
+//   setState(() {
+//     totalAnakan=totalA;
+//   });
   
-}
-  int totalPengemukan=0;
-  void calculatePenggemukan()async{
-  int totalG = (await _pigController.dbpenggemukan)[0]['totalGemukan'];
+// }
+//   int totalPengemukan=0;
+//   void calculatePenggemukan()async{
+//   int totalG = (await _pigController.dbpenggemukan)[0]['totalGemukan'];
  
-  setState(() {
-    totalPengemukan=totalG;
-  });
+//     // setState(() {
+//     //   totalPengemukan=totalG;
+//     // });
   
-}
-  var totalPejantan=0;
-  void p()async{
-  var totalP = (await _pigController.p)[0]['totalPejantan'];
-  print(totalP);
-  setState(() {
-    totalPejantan=totalP;
-  });
+// }
+//   var totalPejantan=0;
+//   void p()async{
+//   var totalP = (await _pigController.p)[0]['totalPejantan'];
+//   print(totalP);
+//   setState(() {
+//     totalPejantan=totalP;
+//   });
   
-}
+// }
  
 } 

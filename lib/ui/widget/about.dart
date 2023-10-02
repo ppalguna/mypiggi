@@ -55,7 +55,8 @@ class About extends StatelessWidget {
             children: [
               Text("TENTANG", style: subtitle.copyWith(fontSize: 17),),
               Container(
-                padding: EdgeInsets.fromLTRB(50, 20, 50, 20),
+                              padding:
+                                  const EdgeInsets.fromLTRB(50, 20, 50, 20),
                 child: Text("I Putu Palguna mahasiswa Institut Teknologi dan Bisnis STIKOM Bali"
                 ", Program Studi Sistem Komputer, dengan Konsentrasi Networking and Cyber Sercurity ", style: subtitle.copyWith(fontSize: 12), textAlign: TextAlign.justify,)),
                   
@@ -63,9 +64,10 @@ class About extends StatelessWidget {
                Column(
                  children: [
                    Container(
-                    padding: EdgeInsets.fromLTRB(50, 20, 50, 20),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(50, 20, 50, 20),
                     child: Container(
-                      padding: EdgeInsets.only(top: 5),
+                                      padding: const EdgeInsets.only(top: 5),
                       height: MediaQuery.of(context).size.height/35,
                       width: MediaQuery.of(context).size.width/3,
                       decoration: const BoxDecoration(
@@ -79,9 +81,10 @@ class About extends StatelessWidget {
                       
                     ),
                     Container(
-                    padding: EdgeInsets.fromLTRB(50, 0, 50, 20),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(50, 0, 50, 20),
                     child: Container(
-                      padding: EdgeInsets.only(top: 5),
+                                      padding: const EdgeInsets.only(top: 5),
                       height: MediaQuery.of(context).size.height/35,
                       width: MediaQuery.of(context).size.width/2,
                       decoration: const BoxDecoration(
@@ -99,12 +102,16 @@ class About extends StatelessWidget {
               SizedBox(height: MediaQuery.of(context).size.height/30,),
               Text("KONTAK", style: subtitle.copyWith(fontSize: 17),),
               Container(
-                padding: EdgeInsets.fromLTRB(50, 20, 50, 20),
+                              padding:
+                                  const EdgeInsets.fromLTRB(50, 20, 50, 20),
                 child: Column(
                   children: [
                    Row(children: [
                     SizedBox(width: MediaQuery.of(context).size.width/200,),
-                    Icon(Icons.email,color: Colors.white,),
+                                      const Icon(
+                                        Icons.email,
+                                        color: Colors.white,
+                                      ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width/50,
                       height: MediaQuery.of(context).size.height/30,
@@ -165,8 +172,8 @@ class About extends StatelessWidget {
    myFoto(){
     return
     CircleAvatar(
-      child: Image.asset('images/myfoto.jpg'),
       backgroundColor: primaryClr,
+      child: Image.asset('images/myfoto.jpg'),
       
   );
   }

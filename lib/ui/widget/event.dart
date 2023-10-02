@@ -7,9 +7,9 @@ class Event extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: 5),
-      padding: EdgeInsets.all(5),
-      decoration: BoxDecoration(
+      margin: const EdgeInsets.only(right: 5),
+      padding: const EdgeInsets.all(5),
+      decoration: const BoxDecoration(
         color: Colors.transparent,
         borderRadius: BorderRadius.all(Radius.circular(10), )
       ),

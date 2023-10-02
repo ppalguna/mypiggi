@@ -9,10 +9,6 @@ class NoteController extends GetxController{
   get text => null;
 
 
-  @override
-  void onReady(){
-    super.onReady();
-  }
   var noteList = <Note>[].obs;
 
  Future< int > addNote({Future? showDialog, Note? note}) async{ 

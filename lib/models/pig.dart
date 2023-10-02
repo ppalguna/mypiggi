@@ -28,7 +28,7 @@ class Pig{
     }  
 
   Map<String,dynamic> toJson(){
-    final Map<String, dynamic>datapig = new Map<String, dynamic>();
+    final Map<String, dynamic> datapig = <String, dynamic>{};
       datapig['id']= id;
       datapig['jenisTernak']=jenisTernak;
       datapig['tipeUpdate']= tipeUpdate;

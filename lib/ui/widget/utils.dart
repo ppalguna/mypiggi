@@ -2,7 +2,6 @@
 
 //import 'dart:ffi';
 
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 
 pickImage(ImageSource source, int imageQuality) async{

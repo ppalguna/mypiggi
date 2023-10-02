@@ -1,13 +1,13 @@
 
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
-
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
 import 'package:my_piggy_app/models/note.dart';
 import 'package:my_piggy_app/ui/widget/notified_page.dart';
-import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
+
 import '../models/task.dart';
 
 class NotifyHelper{
@@ -74,7 +74,7 @@ class NotifyHelper{
        uiLocalNotificationDateInterpretation: 
        UILocalNotificationDateInterpretation.absoluteTime,
        matchDateTimeComponents: DateTimeComponents.time,
-      payload: "${task.title}|"+"${task.note}|"
+        payload: "${task.title}|${task.note}|"
        );
   }
    notescheduledNotification(int hour, int minutes,  Note note)async{
@@ -94,7 +94,7 @@ class NotifyHelper{
        uiLocalNotificationDateInterpretation: 
        UILocalNotificationDateInterpretation.absoluteTime,
        matchDateTimeComponents: DateTimeComponents.time,
-      payload: "${note.judul}|"+"${note.keterangan}|"
+        payload: "${note.judul}|" "${note.keterangan}|"
        );
   }
 
@@ -151,7 +151,7 @@ class NotifyHelper{
     //     ],
     //   ),
     // );
-    Get.dialog(Text("Welcome to Flutter"));
+    Get.dialog(const Text("Welcome to Flutter"));
   }
 
 }

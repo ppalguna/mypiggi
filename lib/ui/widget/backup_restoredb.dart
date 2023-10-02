@@ -1,16 +1,16 @@
 import 'dart:async';
 import 'dart:io';
 
+//import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get/get.dart';
 import 'package:my_piggy_app/controllers/note_controller.dart';
 import 'package:my_piggy_app/controllers/pakan_controller.dart';
 import 'package:my_piggy_app/controllers/profil_controller.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:restart_app/restart_app.dart';
-//import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+
 //import 'package:my_piggy_app/db/db_helper.dart';
 import '../../controllers/pig_controller.dart';
 import '../../controllers/task_controller.dart';
@@ -18,7 +18,7 @@ import '../theme.dart';
 
 
 class backupRestoreData extends StatefulWidget {
-   backupRestoreData({Key? key, required this.title}) : super(key: key);
+  const backupRestoreData({Key? key, required this.title}) : super(key: key);
   final String title;
   @override
   State<backupRestoreData> createState() => _backupRestoreDataState();
@@ -63,7 +63,7 @@ class _backupRestoreDataState extends State<backupRestoreData> {
       ),
       body: Container(
         color:context.theme.dialogBackgroundColor,
-        padding: EdgeInsets.all(15),
+        padding: const EdgeInsets.all(15),
         child: Column(
           children: [
             Container(
@@ -202,7 +202,7 @@ class _backupRestoreDataState extends State<backupRestoreData> {
         Column(
           children: [
              TextButton(
-          child: Text('Nanti saja'),
+                  child: const Text('Nanti saja'),
             onPressed: () => Get.back()
            ),
            ],
@@ -210,7 +210,7 @@ class _backupRestoreDataState extends State<backupRestoreData> {
           Column(
              children: [
                TextButton(
-                    child: Text('Restart'),
+                  child: const Text('Restart'),
                        onPressed: (){
                        Restart.restartApp();
                                       
@@ -269,7 +269,10 @@ class _backupRestoreDataState extends State<backupRestoreData> {
                     offset: Offset(0, 0),
                   )
                 ],
-    icon: Icon(Icons.warning_amber_outlined,color: Colors.white,) ,
+      icon: const Icon(
+        Icons.warning_amber_outlined,
+        color: Colors.white,
+      ),
     colorText: Colors.white,
     );  
   

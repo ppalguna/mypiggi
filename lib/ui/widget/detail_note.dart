@@ -5,7 +5,7 @@ import 'package:my_piggy_app/ui/theme.dart';
 
 class detailNote extends StatelessWidget {
   final Note? note;
-  detailNote(this.note);
+  const detailNote(this.note, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,9 @@ class detailNote extends StatelessWidget {
                     height: MediaQuery.of(context).size.height/1.2,
                     decoration:  BoxDecoration(
                       color: _getBGClr(note?.color??0),
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(40),topRight: Radius.circular(40))
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(40),
+                            topRight: Radius.circular(40))
                     ),
                     
                     child: Padding(
@@ -74,7 +76,7 @@ class detailNote extends StatelessWidget {
 
                             ),
                            Container(
-                            padding: EdgeInsets.only(top: 20),
+                              padding: const EdgeInsets.only(top: 20),
                             width: MediaQuery.of(context).size.width/1.5,
                              child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,

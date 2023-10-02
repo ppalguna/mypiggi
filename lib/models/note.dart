@@ -41,7 +41,7 @@ class Note{
     }  
 
   Map<String,dynamic> toJson(){
-    final Map<String, dynamic>datanote = new Map<String, dynamic>();
+    final Map<String, dynamic> datanote = <String, dynamic>{};
       datanote['id']= id;
       datanote['judul']=judul;
       datanote['date']= date;

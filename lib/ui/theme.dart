@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 const bluishClr = Color.fromRGBO(58, 134, 255, 1);
 const primaryClr = bluishClr;
 const darkHeaderClr = Color(0xFF424242);
@@ -32,7 +32,7 @@ TextStyle get subHeadingStyle{
 }
 TextStyle get headingStyle{
   return GoogleFonts.ubuntu(
-    textStyle: TextStyle(
+      textStyle: const TextStyle(
       fontSize: 22,
       color: Color.fromARGB(255, 91, 91, 91),
       fontWeight: FontWeight.bold
