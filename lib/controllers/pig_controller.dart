@@ -56,7 +56,7 @@ class PigController extends GetxController {
     var totalA = (await DBHelper.calculateAnakan())[0]['totalAnak'];
     print(totalA);
     // setState(() {
-    totalAnakan.value = totalA;
+    totalAnakan.value = totalA ?? 0;
     // });
     update();
   }
@@ -66,7 +66,7 @@ class PigController extends GetxController {
     var totalP = (await DBHelper.p())[0]['totalPejantan'];
     print(totalP);
     // setState(() {
-    totalPejantan.value = totalP;
+    totalPejantan.value = totalP ?? 0;
     // });
     update();
   }
